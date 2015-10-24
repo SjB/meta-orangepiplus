@@ -1,0 +1,38 @@
+From 1cac81b4383d6be337fb9e17540c360311a3548f Mon Sep 17 00:00:00 2001
+From: Maxime Ripard <maxime.ripard@free-electrons.com>
+Date: Mon, 17 Nov 2014 14:42:52 +0100
+Subject: [PATCH] dmaengine: sun6i: Declare slave capabilities for the generic
+ code
+
+Now that the generic slave caps code can make use of the device assigned
+capabilities, instead of relying on a callback to be implemented.
+
+Make use of this code.
+
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+Signed-off-by: Vinod Koul <vinod.koul@intel.com>
+---
+ drivers/dma/sun6i-dma.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
+index 0e11639..7ebcf9b 100644
+--- a/drivers/dma/sun6i-dma.c
++++ b/drivers/dma/sun6i-dma.c
+@@ -968,7 +968,15 @@ static int sun6i_dma_probe(struct platform_device *pdev)
+ 	sdc->slave.device_pause			= sun6i_dma_pause;
+ 	sdc->slave.device_resume		= sun6i_dma_resume;
+ 	sdc->slave.device_terminate_all		= sun6i_dma_terminate_all;
+-
++	sdc->slave.src_addr_widths		= BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) |
++						  BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) |
++						  BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
++	sdc->slave.dst_addr_widths		= BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) |
++						  BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) |
++						  BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
++	sdc->slave.directions			= BIT(DMA_DEV_TO_MEM) |
++						  BIT(DMA_MEM_TO_DEV);
++	sdc->slave.residue_granularity		= DMA_RESIDUE_GRANULARITY_BURST;
+ 	sdc->slave.dev = &pdev->dev;
+ 
+ 	sdc->pchans = devm_kcalloc(&pdev->dev, sdc->cfg->nr_max_channels,

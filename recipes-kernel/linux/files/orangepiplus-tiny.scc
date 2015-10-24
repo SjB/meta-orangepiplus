@@ -1,0 +1,8 @@
+define KMACHINE orangepiplus
+define KTYPE tiny
+define KARCH arm
+
+include ktypes/tiny/tiny.scc
+branch orangepiplus
+
+include orangepiplus.scc

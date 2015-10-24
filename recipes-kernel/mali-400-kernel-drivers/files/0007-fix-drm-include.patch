@@ -1,0 +1,40 @@
+diff --git a/driver/src/egl/x11/drm_module/mali_drm/mali/mali_drv.c b/driver/src/egl/x11/drm_module/mali_drm/mali/mali_drv.c
+index c9bb653..f2cd38e 100644
+--- a/driver/src/egl/x11/drm_module/mali_drm/mali/mali_drv.c
++++ b/driver/src/egl/x11/drm_module/mali_drm/mali/mali_drv.c
+@@ -8,8 +8,8 @@
+  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+  */
+ 
++#include <drm/drmP.h>
+ #include <linux/vermagic.h>
+-#include "drmP.h"
+ #include "mali_drm.h"
+ #include "mali_drv.h"
+ 
+diff --git a/driver/src/egl/x11/drm_module/mali_drm/mali/mali_drv.h b/driver/src/egl/x11/drm_module/mali_drm/mali/mali_drv.h
+index 87f28ec..9030e1e 100644
+--- a/driver/src/egl/x11/drm_module/mali_drm/mali/mali_drv.h
++++ b/driver/src/egl/x11/drm_module/mali_drm/mali/mali_drv.h
+@@ -19,7 +19,7 @@
+ #define DRIVER_MINOR		1
+ #define DRIVER_PATCHLEVEL	0
+ 
+-#include "drm_sman.h"
++#include <drm/drm_sman.h>
+ 
+ typedef struct drm_mali_private 
+ {
+diff --git a/driver/src/egl/x11/drm_module/mali_drm/mali/mali_mm.c b/driver/src/egl/x11/drm_module/mali_drm/mali/mali_mm.c
+index 65108be..1cd1bc9 100644
+--- a/driver/src/egl/x11/drm_module/mali_drm/mali/mali_mm.c
++++ b/driver/src/egl/x11/drm_module/mali_drm/mali/mali_mm.c
+@@ -8,7 +8,7 @@
+  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+  */
+ 
+-#include "drmP.h"
++#include <drm/drmP.h>
+ #include "mali_drm.h"
+ #include "mali_drv.h"
+ 

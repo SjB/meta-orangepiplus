@@ -1,0 +1,64 @@
+From d2aa6f540022f3308fc959d9192dae5cc409ac3e Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Tue, 13 Jan 2015 09:37:25 +0800
+Subject: [PATCH] ARM: dts: sun9i: Add mmc module clock nodes for A80
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The mmc module clocks are A80 specific module 0 (storage) type clocks.
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Andreas Färber <afaerber@suse.de>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun9i-a80.dtsi | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun9i-a80.dtsi b/arch/arm/boot/dts/sun9i-a80.dtsi
+index 4b584cb..ddc3467 100644
+--- a/arch/arm/boot/dts/sun9i-a80.dtsi
++++ b/arch/arm/boot/dts/sun9i-a80.dtsi
+@@ -219,6 +219,42 @@
+ 			clock-output-names = "cci400";
+ 		};
+ 
++		mmc0_clk: clk@06000410 {
++			#clock-cells = <1>;
++			compatible = "allwinner,sun9i-a80-mmc-clk";
++			reg = <0x06000410 0x4>;
++			clocks = <&osc24M>, <&pll4>;
++			clock-output-names = "mmc0", "mmc0_output",
++					     "mmc0_sample";
++		};
++
++		mmc1_clk: clk@06000414 {
++			#clock-cells = <1>;
++			compatible = "allwinner,sun9i-a80-mmc-clk";
++			reg = <0x06000414 0x4>;
++			clocks = <&osc24M>, <&pll4>;
++			clock-output-names = "mmc1", "mmc1_output",
++					     "mmc1_sample";
++		};
++
++		mmc2_clk: clk@06000418 {
++			#clock-cells = <1>;
++			compatible = "allwinner,sun9i-a80-mmc-clk";
++			reg = <0x06000418 0x4>;
++			clocks = <&osc24M>, <&pll4>;
++			clock-output-names = "mmc2", "mmc2_output",
++					     "mmc2_sample";
++		};
++
++		mmc3_clk: clk@0600041c {
++			#clock-cells = <1>;
++			compatible = "allwinner,sun9i-a80-mmc-clk";
++			reg = <0x0600041c 0x4>;
++			clocks = <&osc24M>, <&pll4>;
++			clock-output-names = "mmc3", "mmc3_output",
++					     "mmc3_sample";
++		};
++
+ 		ahb0_gates: clk@06000580 {
+ 			#clock-cells = <1>;
+ 			compatible = "allwinner,sun9i-a80-ahb0-gates-clk";

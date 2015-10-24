@@ -1,0 +1,68 @@
+From 41e7afb1c14f92e02055d130352843665a170a07 Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Tue, 6 Jan 2015 10:35:15 +0800
+Subject: [PATCH] ARM: dts: sunxi: Enable thermal sensor support for RTP on
+ sun[457]i
+
+Now that the resistive touchpanel driver supports thermal sensors,
+add the "#thermal-sensor-cells" property as required by the thermal
+framework.
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Acked-by: Eduardo Valentin <edubezval@gmail.com>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun4i-a10.dtsi  | 1 +
+ arch/arm/boot/dts/sun5i-a10s.dtsi | 1 +
+ arch/arm/boot/dts/sun5i-a13.dtsi  | 1 +
+ arch/arm/boot/dts/sun7i-a20.dtsi  | 1 +
+ 4 files changed, 4 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun4i-a10.dtsi b/arch/arm/boot/dts/sun4i-a10.dtsi
+index fe190e8..5aae86c 100644
+--- a/arch/arm/boot/dts/sun4i-a10.dtsi
++++ b/arch/arm/boot/dts/sun4i-a10.dtsi
+@@ -734,6 +734,7 @@
+ 			compatible = "allwinner,sun4i-a10-ts";
+ 			reg = <0x01c25000 0x100>;
+ 			interrupts = <29>;
++			#thermal-sensor-cells = <0>;
+ 		};
+ 
+ 		uart0: serial@01c28000 {
+diff --git a/arch/arm/boot/dts/sun5i-a10s.dtsi b/arch/arm/boot/dts/sun5i-a10s.dtsi
+index 241d69d..7ab6d32 100644
+--- a/arch/arm/boot/dts/sun5i-a10s.dtsi
++++ b/arch/arm/boot/dts/sun5i-a10s.dtsi
+@@ -548,6 +548,7 @@
+ 			compatible = "allwinner,sun4i-a10-ts";
+ 			reg = <0x01c25000 0x100>;
+ 			interrupts = <29>;
++			#thermal-sensor-cells = <0>;
+ 		};
+ 
+ 		uart0: serial@01c28000 {
+diff --git a/arch/arm/boot/dts/sun5i-a13.dtsi b/arch/arm/boot/dts/sun5i-a13.dtsi
+index 2d2734a..b3c3573 100644
+--- a/arch/arm/boot/dts/sun5i-a13.dtsi
++++ b/arch/arm/boot/dts/sun5i-a13.dtsi
+@@ -482,6 +482,7 @@
+ 			compatible = "allwinner,sun4i-a10-ts";
+ 			reg = <0x01c25000 0x100>;
+ 			interrupts = <29>;
++			#thermal-sensor-cells = <0>;
+ 		};
+ 
+ 		uart1: serial@01c28400 {
+diff --git a/arch/arm/boot/dts/sun7i-a20.dtsi b/arch/arm/boot/dts/sun7i-a20.dtsi
+index 252b4bf..17639ad 100644
+--- a/arch/arm/boot/dts/sun7i-a20.dtsi
++++ b/arch/arm/boot/dts/sun7i-a20.dtsi
+@@ -942,6 +942,7 @@
+ 			compatible = "allwinner,sun4i-a10-ts";
+ 			reg = <0x01c25000 0x100>;
+ 			interrupts = <GIC_SPI 29 IRQ_TYPE_LEVEL_HIGH>;
++			#thermal-sensor-cells = <0>;
+ 		};
+ 
+ 		uart0: serial@01c28000 {

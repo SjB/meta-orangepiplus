@@ -1,0 +1,37 @@
+From 9c56f3f39a60292d785f3a72a7fb09997570abe0 Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Sat, 17 Jan 2015 13:19:29 +0800
+Subject: [PATCH] ARM: dts: sun9i: Add mmc config clock nodes
+
+Add the device tree nodes for the mmc config clock nodes.
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun9i-a80.dtsi | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun9i-a80.dtsi b/arch/arm/boot/dts/sun9i-a80.dtsi
+index 820b4c5..1925c89 100644
+--- a/arch/arm/boot/dts/sun9i-a80.dtsi
++++ b/arch/arm/boot/dts/sun9i-a80.dtsi
+@@ -333,6 +333,19 @@
+ 		 */
+ 		ranges = <0 0 0 0x20000000>;
+ 
++		mmc_config_clk: clk@01c13000 {
++			compatible = "allwinner,sun9i-a80-mmc-config-clk";
++			reg = <0x01c13000 0x10>;
++			clocks = <&ahb0_gates 8>;
++			clock-names = "ahb";
++			resets = <&ahb0_resets 8>;
++			reset-names = "ahb";
++			#clock-cells = <1>;
++			#reset-cells = <1>;
++			clock-output-names = "mmc0_config", "mmc1_config",
++					     "mmc2_config", "mmc3_config";
++		};
++
+ 		gic: interrupt-controller@01c41000 {
+ 			compatible = "arm,cortex-a7-gic", "arm,cortex-a15-gic";
+ 			reg = <0x01c41000 0x1000>,

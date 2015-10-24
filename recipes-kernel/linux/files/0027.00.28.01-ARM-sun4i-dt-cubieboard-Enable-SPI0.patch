@@ -1,0 +1,31 @@
+From c9f80dd3b1dc9d1fd4864374b549efb9e3b1f779 Mon Sep 17 00:00:00 2001
+From: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+Date: Mon, 8 Dec 2014 04:14:02 -0600
+Subject: [PATCH] ARM: sun4i: dt: cubieboard: Enable SPI0
+
+Only SPI0 is enabled, as the schematic denotes it as the only SPI bus,
+while other pins are reserved for different peripherals.
+
+Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun4i-a10-cubieboard.dts | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun4i-a10-cubieboard.dts b/arch/arm/boot/dts/sun4i-a10-cubieboard.dts
+index 6a310da..140e3ee 100644
+--- a/arch/arm/boot/dts/sun4i-a10-cubieboard.dts
++++ b/arch/arm/boot/dts/sun4i-a10-cubieboard.dts
+@@ -148,6 +148,12 @@
+ 			pinctrl-0 = <&i2c1_pins_a>;
+ 			status = "okay";
+ 		};
++
++		spi0: spi@01c05000 {
++			pinctrl-names = "default";
++			pinctrl-0 = <&spi0_pins_a>;
++			status = "okay";
++		};
+ 	};
+ 
+ 	leds {

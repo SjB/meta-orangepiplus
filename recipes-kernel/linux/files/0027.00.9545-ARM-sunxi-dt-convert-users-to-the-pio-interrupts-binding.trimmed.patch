@@ -1,0 +1,56 @@
+diff --git a/arch/arm/boot/dts/sun4i-a10.dtsi b/arch/arm/boot/dts/sun4i-a10.dtsi
+index 61c03d1..710a053 100644
+--- a/arch/arm/boot/dts/sun4i-a10.dtsi
++++ b/arch/arm/boot/dts/sun4i-a10.dtsi
+@@ -713,8 +713,7 @@
+ 			clocks = <&apb0_gates 5>;
+ 			gpio-controller;
+ 			interrupt-controller;
+-			#interrupt-cells = <2>;
+-			#size-cells = <0>;
++			#interrupt-cells = <3>;
+ 			#gpio-cells = <3>;
+ 
+ 			pwm0_pins_a: pwm0@0 {
+diff --git a/arch/arm/boot/dts/sun6i-a31.dtsi b/arch/arm/boot/dts/sun6i-a31.dtsi
+index 008047a..2541412 100644
+--- a/arch/arm/boot/dts/sun6i-a31.dtsi
++++ b/arch/arm/boot/dts/sun6i-a31.dtsi
+@@ -599,8 +599,7 @@
+ 			clocks = <&apb1_gates 5>;
+ 			gpio-controller;
+ 			interrupt-controller;
+-			#interrupt-cells = <2>;
+-			#size-cells = <0>;
++			#interrupt-cells = <3>;
+ 			#gpio-cells = <3>;
+ 
+ 			uart0_pins_a: uart0@0 {
+diff --git a/arch/arm/boot/dts/sun7i-a20.dtsi b/arch/arm/boot/dts/sun7i-a20.dtsi
+index 25bd4f1..86a4bb4 100644
+--- a/arch/arm/boot/dts/sun7i-a20.dtsi
++++ b/arch/arm/boot/dts/sun7i-a20.dtsi
+@@ -757,8 +757,7 @@
+ 			clocks = <&apb0_gates 5>;
+ 			gpio-controller;
+ 			interrupt-controller;
+-			#interrupt-cells = <2>;
+-			#size-cells = <0>;
++			#interrupt-cells = <3>;
+ 			#gpio-cells = <3>;
+ 
+ 			pwm0_pins_a: pwm0@0 {
+diff --git a/arch/arm/boot/dts/sun8i-a23-a33.dtsi b/arch/arm/boot/dts/sun8i-a23-a33.dtsi
+index b9e4d56..9c4a55c 100644
+--- a/arch/arm/boot/dts/sun8i-a23-a33.dtsi
++++ b/arch/arm/boot/dts/sun8i-a23-a33.dtsi
+@@ -361,8 +361,7 @@
+ 			clocks = <&apb1_gates 5>;
+ 			gpio-controller;
+ 			interrupt-controller;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
++			#interrupt-cells = <3>;
+ 			#gpio-cells = <3>;
+ 
+ 			uart0_pins_a: uart0@0 {

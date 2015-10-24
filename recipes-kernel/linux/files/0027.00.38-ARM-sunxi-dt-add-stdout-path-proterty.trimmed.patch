@@ -1,0 +1,95 @@
+diff --git a/arch/arm/boot/dts/sun4i-a10-a1000.dts b/arch/arm/boot/dts/sun4i-a10-a1000.dts
+index 648626b..f032814 100644
+--- a/arch/arm/boot/dts/sun4i-a10-a1000.dts
++++ b/arch/arm/boot/dts/sun4i-a10-a1000.dts
+@@ -58,6 +58,14 @@
+ 	model = "Mele A1000";
+ 	compatible = "mele,a1000", "allwinner,sun4i-a10";
+ 
++	aliases {
++		serial0 = &uart0;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++
+ 	leds {
+ 		compatible = "gpio-leds";
+ 		pinctrl-names = "default";
+diff --git a/arch/arm/boot/dts/sun4i-a10-ba10-tvbox.dts b/arch/arm/boot/dts/sun4i-a10-ba10-tvbox.dts
+index bebb803..1a3c7dd 100644
+--- a/arch/arm/boot/dts/sun4i-a10-ba10-tvbox.dts
++++ b/arch/arm/boot/dts/sun4i-a10-ba10-tvbox.dts
+@@ -54,6 +54,14 @@
+ / {
+ 	model = "BA10 tvbox";
+ 	compatible = "allwinner,ba10-tvbox", "allwinner,sun4i-a10";
++
++	aliases {
++		serial0 = &uart0;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
+ };
+ 
+ &ehci0 {
+diff --git a/arch/arm/boot/dts/sun4i-a10-chuwi-v7-cw0825.dts b/arch/arm/boot/dts/sun4i-a10-chuwi-v7-cw0825.dts
+index 97fca89..35fb163 100644
+--- a/arch/arm/boot/dts/sun4i-a10-chuwi-v7-cw0825.dts
++++ b/arch/arm/boot/dts/sun4i-a10-chuwi-v7-cw0825.dts
+@@ -54,6 +54,14 @@
+ / {
+ 	model = "Chuwi V7 CW0825";
+ 	compatible = "chuwi,v7-cw0825", "allwinner,sun4i-a10";
++
++	aliases {
++		serial0 = &uart0;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
+ };
+ 
+ &ehci1 {
+diff --git a/arch/arm/boot/dts/sun4i-a10-cubieboard.dts b/arch/arm/boot/dts/sun4i-a10-cubieboard.dts
+index 07c2f64..0ba67d7 100644
+--- a/arch/arm/boot/dts/sun4i-a10-cubieboard.dts
++++ b/arch/arm/boot/dts/sun4i-a10-cubieboard.dts
+@@ -57,6 +57,14 @@
+ 	model = "Cubietech Cubieboard";
+ 	compatible = "cubietech,a10-cubieboard", "allwinner,sun4i-a10";
+ 
++	aliases {
++		serial0 = &uart0;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++
+ 	leds {
+ 		compatible = "gpio-leds";
+ 		pinctrl-names = "default";
+diff --git a/arch/arm/boot/dts/sun6i-a31s-cs908.dts b/arch/arm/boot/dts/sun6i-a31s-cs908.dts
+index 3f0cc8c..68cb2bf 100644
+--- a/arch/arm/boot/dts/sun6i-a31s-cs908.dts
++++ b/arch/arm/boot/dts/sun6i-a31s-cs908.dts
+@@ -53,6 +53,14 @@
+ / {
+ 	model = "CSQ CS908 top set box";
+ 	compatible = "csq,cs908", "allwinner,sun6i-a31s";
++
++	aliases {
++		serial0 = &uart0;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
+ };
+ 
+ &ehci0 {

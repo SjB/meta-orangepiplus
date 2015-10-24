@@ -1,0 +1,9 @@
+diff --git a/driver/src/devicedrv/ump/Makefile b/driver/src/devicedrv/ump/Makefile
+index f439385..24deb07 100644
+--- a/driver/src/devicedrv/ump/Makefile
++++ b/driver/src/devicedrv/ump/Makefile
+@@ -56,4 +56,3 @@ kernelrelease:
+ 
+ clean:
+ 	$(MAKE) -C $(KDIR) M=$(CURDIR) clean
+-	$(MAKE) -C $(KDIR) M=$(CURDIR)/../mali clean

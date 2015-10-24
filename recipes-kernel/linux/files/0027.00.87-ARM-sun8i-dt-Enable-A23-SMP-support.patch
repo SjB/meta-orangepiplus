@@ -1,0 +1,37 @@
+From f2641d2a9126846dd2d9e8c3910d7134e1bfbbda Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Wed, 18 Mar 2015 11:24:02 +0800
+Subject: [PATCH] ARM: sun8i: dt: Enable A23 SMP support
+
+Add enable-method property to enable SMP support.
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun8i-a23.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun8i-a23.dtsi b/arch/arm/boot/dts/sun8i-a23.dtsi
+index 9ff9227..6d6eda3 100644
+--- a/arch/arm/boot/dts/sun8i-a23.dtsi
++++ b/arch/arm/boot/dts/sun8i-a23.dtsi
+@@ -81,6 +81,7 @@
+ 	};
+ 
+ 	cpus {
++		enable-method = "allwinner,sun8i-a23";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 
+@@ -593,6 +594,11 @@
+ 			};
+ 		};
+ 
++		cpucfg@01f01c00 {
++			compatible = "allwinner,sun8i-a23-cpuconfig";
++			reg = <0x01f01c00 0x300>;
++		};
++
+ 		r_uart: serial@01f02800 {
+ 			compatible = "snps,dw-apb-uart";
+ 			reg = <0x01f02800 0x400>;

@@ -1,0 +1,34 @@
+From ecc19d17868be9c9f8f00ed928791533c420f3e0 Mon Sep 17 00:00:00 2001
+From: Maxime Ripard <maxime.ripard@free-electrons.com>
+Date: Mon, 17 Nov 2014 14:42:53 +0100
+Subject: [PATCH] dmaengine: Add a warning for drivers not using the generic
+ slave caps retrieval
+
+For the slave caps retrieval to be really useful, most drivers need to
+implement it.
+
+Hence, we need to be slightly more aggressive, and trigger a warning at
+registration time for drivers that don't fill their caps infos in order to
+encourage them to implement it.
+
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+Acked-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Vinod Koul <vinod.koul@intel.com>
+---
+ drivers/dma/dmaengine.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index cae1209..30211f9 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -826,6 +826,9 @@ int dma_async_device_register(struct dma_device *device)
+ 	BUG_ON(!device->device_issue_pending);
+ 	BUG_ON(!device->dev);
+ 
++	WARN(dma_has_cap(DMA_SLAVE, device->cap_mask) && !device->directions,
++	     "this driver doesn't support generic slave capabilities reporting\n");
++
+ 	/* note: this only matters in the
+ 	 * CONFIG_ASYNC_TX_ENABLE_CHANNEL_SWITCH=n case
+ 	 */

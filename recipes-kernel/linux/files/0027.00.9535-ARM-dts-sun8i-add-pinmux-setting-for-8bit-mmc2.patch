@@ -1,0 +1,35 @@
+From 93b129d6fa2b158e31d3c0e4ed86906eeac0f60c Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Tue, 2 Jun 2015 18:04:01 +0800
+Subject: [PATCH] ARM: dts: sun8i: Add pinmux setting for 8bit mmc2
+
+mmc2 is mostly used with eMMC flash chips, as an alternative to
+raw NAND flash chips. 8 bit mmc is commonly used.
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun8i-a23-a33.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun8i-a23-a33.dtsi b/arch/arm/boot/dts/sun8i-a23-a33.dtsi
+index faea94e..7abd0ae 100644
+--- a/arch/arm/boot/dts/sun8i-a23-a33.dtsi
++++ b/arch/arm/boot/dts/sun8i-a23-a33.dtsi
+@@ -366,6 +366,16 @@
+ 				allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
+ 			};
+ 
++			mmc2_8bit_pins: mmc2_8bit {
++				allwinner,pins = "PC5", "PC6", "PC8",
++						 "PC9", "PC10", "PC11",
++						 "PC12", "PC13", "PC14",
++						 "PC15";
++				allwinner,function = "mmc2";
++				allwinner,drive = <SUN4I_PINCTRL_30_MA>;
++				allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
++			};
++
+ 			i2c0_pins_a: i2c0@0 {
+ 				allwinner,pins = "PH2", "PH3";
+ 				allwinner,function = "i2c0";

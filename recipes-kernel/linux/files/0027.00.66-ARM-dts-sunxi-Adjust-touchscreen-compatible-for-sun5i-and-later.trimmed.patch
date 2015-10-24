@@ -1,0 +1,13 @@
+diff --git a/arch/arm/boot/dts/sun7i-a20.dtsi b/arch/arm/boot/dts/sun7i-a20.dtsi
+index fdd1817..2b4847c 100644
+--- a/arch/arm/boot/dts/sun7i-a20.dtsi
++++ b/arch/arm/boot/dts/sun7i-a20.dtsi
+@@ -1042,7 +1042,7 @@
+ 		};
+ 
+ 		rtp: rtp@01c25000 {
+-			compatible = "allwinner,sun4i-a10-ts";
++			compatible = "allwinner,sun5i-a13-ts";
+ 			reg = <0x01c25000 0x100>;
+ 			interrupts = <GIC_SPI 29 IRQ_TYPE_LEVEL_HIGH>;
+ 			#thermal-sensor-cells = <0>;

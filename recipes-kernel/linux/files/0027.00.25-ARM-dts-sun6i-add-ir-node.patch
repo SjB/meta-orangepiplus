@@ -1,0 +1,35 @@
+From 4ac367b4ec7257a300bd39e5757aa988f1435194 Mon Sep 17 00:00:00 2001
+From: Hans de Goede <hdegoede@redhat.com>
+Date: Mon, 29 Dec 2014 12:09:24 +0100
+Subject: [PATCH] ARM: dts: sun6i: Add ir node
+
+Add a node for the ir receiver found on the A31.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+[Maxime: Added a node label]
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun6i-a31.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun6i-a31.dtsi b/arch/arm/boot/dts/sun6i-a31.dtsi
+index 766822d..c50d4e8 100644
+--- a/arch/arm/boot/dts/sun6i-a31.dtsi
++++ b/arch/arm/boot/dts/sun6i-a31.dtsi
+@@ -896,6 +896,16 @@
+ 			reg = <0x01f01c00 0x300>;
+ 		};
+ 
++		ir: ir@01f02000 {
++			compatible = "allwinner,sun5i-a13-ir";
++			clocks = <&apb0_gates 1>, <&ir_clk>;
++			clock-names = "apb", "ir";
++			resets = <&apb0_rst 1>;
++			interrupts = <0 37 4>;
++			reg = <0x01f02000 0x40>;
++			status = "disabled";
++		};
++
+ 		r_pio: pinctrl@01f02c00 {
+ 			compatible = "allwinner,sun6i-a31-r-pinctrl";
+ 			reg = <0x01f02c00 0x400>;

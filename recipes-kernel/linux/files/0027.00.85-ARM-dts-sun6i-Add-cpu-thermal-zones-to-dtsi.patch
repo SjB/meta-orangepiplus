@@ -1,0 +1,65 @@
+From eb58b40fb62413d820407c8210acb6c2f1ac1d9b Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Thu, 26 Mar 2015 05:04:49 +0800
+Subject: [PATCH] ARM: dts: sun6i: Add cpu thermal zones to dtsi
+
+The core temperature sensor now supports thermal zones. Add a thermal
+zone mapping for the cpus with passive cooling (cpufreq throttling).
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun6i-a31.dtsi | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun6i-a31.dtsi b/arch/arm/boot/dts/sun6i-a31.dtsi
+index 9ea0edb..25a97f0 100644
+--- a/arch/arm/boot/dts/sun6i-a31.dtsi
++++ b/arch/arm/boot/dts/sun6i-a31.dtsi
+@@ -50,6 +50,7 @@
+ #include "skeleton.dtsi"
+ 
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
++#include <dt-bindings/thermal/thermal.h>
+ 
+ #include <dt-bindings/pinctrl/sun4i-a10.h>
+ 
+@@ -133,6 +134,38 @@
+ 		};
+ 	};
+ 
++	thermal-zones {
++		cpu_thermal {
++			/* milliseconds */
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++			thermal-sensors = <&rtp>;
++
++			cooling-maps {
++				map0 {
++					trip = <&cpu_alert0>;
++					cooling-device = <&cpu0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
++				};
++			};
++
++			trips {
++				cpu_alert0: cpu_alert0 {
++					/* milliCelsius */
++					temperature = <70000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu_crit: cpu_crit {
++					/* milliCelsius */
++					temperature = <100000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
++		};
++	};
++
+ 	memory {
+ 		reg = <0x40000000 0x80000000>;
+ 	};

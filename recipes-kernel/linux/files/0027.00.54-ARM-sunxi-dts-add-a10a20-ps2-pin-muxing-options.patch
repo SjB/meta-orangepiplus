@@ -1,0 +1,62 @@
+From 1e8d156750a3fcd8c7543d8d47dee2ffd0daa298 Mon Sep 17 00:00:00 2001
+From: Vishnu Patekar <vishnupatekar0510@gmail.com>
+Date: Sun, 25 Jan 2015 19:10:09 +0530
+Subject: [PATCH] ARM: sunxi: dts: Add A10/A20 PS2 pin muxing options
+
+Signed-off-by: VishnuPatekar <vishnupatekar0510@gmail.com>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun4i-a10.dtsi | 14 ++++++++++++++
+ arch/arm/boot/dts/sun7i-a20.dtsi | 14 ++++++++++++++
+ 2 files changed, 28 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun4i-a10.dtsi b/arch/arm/boot/dts/sun4i-a10.dtsi
+index 54aeb68..2d7483a 100644
+--- a/arch/arm/boot/dts/sun4i-a10.dtsi
++++ b/arch/arm/boot/dts/sun4i-a10.dtsi
+@@ -737,6 +737,20 @@
+ 				allwinner,drive = <SUN4I_PINCTRL_10_MA>;
+ 				allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
+ 			};
++
++			ps20_pins_a: ps20@0 {
++				allwinner,pins = "PI20", "PI21";
++				allwinner,function = "ps2";
++				allwinner,drive = <SUN4I_PINCTRL_10_MA>;
++				allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
++			};
++
++			ps21_pins_a: ps21@0 {
++				allwinner,pins = "PH12", "PH13";
++				allwinner,function = "ps2";
++				allwinner,drive = <SUN4I_PINCTRL_10_MA>;
++				allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
++			};
+ 		};
+ 
+ 		timer@01c20c00 {
+diff --git a/arch/arm/boot/dts/sun7i-a20.dtsi b/arch/arm/boot/dts/sun7i-a20.dtsi
+index a7c6431..9108feb 100644
+--- a/arch/arm/boot/dts/sun7i-a20.dtsi
++++ b/arch/arm/boot/dts/sun7i-a20.dtsi
+@@ -941,6 +941,20 @@
+ 				    allwinner,drive = <SUN4I_PINCTRL_10_MA>;
+ 				    allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
+ 			};
++
++			ps20_pins_a: ps20@0 {
++				allwinner,pins = "PI20", "PI21";
++				allwinner,function = "ps2";
++				allwinner,drive = <SUN4I_PINCTRL_10_MA>;
++				allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
++			};
++
++			ps21_pins_a: ps21@0 {
++				allwinner,pins = "PH12", "PH13";
++				allwinner,function = "ps2";
++				allwinner,drive = <SUN4I_PINCTRL_10_MA>;
++				allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
++			};
+ 		};
+ 
+ 		timer@01c20c00 {

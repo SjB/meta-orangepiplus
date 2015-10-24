@@ -1,0 +1,67 @@
+From f91b7c62e0cdb8a1a72b61b16fcd48858a7d9193 Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Tue, 6 Jan 2015 10:35:11 +0800
+Subject: [PATCH] ARM: sunxi: Register cpufreq-dt for sun[45678]i
+
+On sun[45678]i, we have one cluster of identical cores sharing a
+clock, which is ideal for using cpufreq-dt. Register a platform
+device for cpufreq-dt.
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/mach-sunxi/sunxi.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/arch/arm/mach-sunxi/sunxi.c b/arch/arm/mach-sunxi/sunxi.c
+index d4bb239..1bc811a 100644
+--- a/arch/arm/mach-sunxi/sunxi.c
++++ b/arch/arm/mach-sunxi/sunxi.c
+@@ -13,9 +13,15 @@
+ #include <linux/clk-provider.h>
+ #include <linux/clocksource.h>
+ #include <linux/init.h>
++#include <linux/platform_device.h>
+ 
+ #include <asm/mach/arch.h>
+ 
++static void __init sunxi_dt_cpufreq_init(void)
++{
++	platform_device_register_simple("cpufreq-dt", -1, NULL, 0);
++}
++
+ static const char * const sunxi_board_dt_compat[] = {
+ 	"allwinner,sun4i-a10",
+ 	"allwinner,sun5i-a10s",
+@@ -25,6 +31,7 @@ static const char * const sunxi_board_dt_compat[] = {
+ 
+ DT_MACHINE_START(SUNXI_DT, "Allwinner A1X (Device Tree)")
+ 	.dt_compat	= sunxi_board_dt_compat,
++	.init_late	= sunxi_dt_cpufreq_init,
+ MACHINE_END
+ 
+ static const char * const sun6i_board_dt_compat[] = {
+@@ -45,6 +52,7 @@ static void __init sun6i_timer_init(void)
+ DT_MACHINE_START(SUN6I_DT, "Allwinner sun6i (A31) Family")
+ 	.init_time	= sun6i_timer_init,
+ 	.dt_compat	= sun6i_board_dt_compat,
++	.init_late	= sunxi_dt_cpufreq_init,
+ MACHINE_END
+ 
+ static const char * const sun7i_board_dt_compat[] = {
+@@ -54,6 +62,7 @@ static const char * const sun7i_board_dt_compat[] = {
+ 
+ DT_MACHINE_START(SUN7I_DT, "Allwinner sun7i (A20) Family")
+ 	.dt_compat	= sun7i_board_dt_compat,
++	.init_late	= sunxi_dt_cpufreq_init,
+ MACHINE_END
+ 
+ static const char * const sun8i_board_dt_compat[] = {
+@@ -63,6 +72,7 @@ static const char * const sun8i_board_dt_compat[] = {
+ 
+ DT_MACHINE_START(SUN8I_DT, "Allwinner sun8i (A23) Family")
+ 	.dt_compat	= sun8i_board_dt_compat,
++	.init_late	= sunxi_dt_cpufreq_init,
+ MACHINE_END
+ 
+ static const char * const sun9i_board_dt_compat[] = {

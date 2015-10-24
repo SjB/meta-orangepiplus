@@ -1,0 +1,46 @@
+From c91781b44e2bf4770f894c80cbe99e3404b690fb Mon Sep 17 00:00:00 2001
+From: Maxime Ripard <maxime.ripard@free-electrons.com>
+Date: Mon, 17 Nov 2014 14:42:40 +0100
+Subject: [PATCH] dmaengine: pch-dma: Rename device_control
+
+Rename the device_control callback of the Intel PCH DMA driver to terminate_all
+since it's all it's really doing. That will eventually be used to retrieve
+slave capabilities.
+
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+Signed-off-by: Vinod Koul <vinod.koul@intel.com>
+---
+ drivers/dma/pch_dma.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/dma/pch_dma.c b/drivers/dma/pch_dma.c
+index 6e0e47d..35c143c 100644
+--- a/drivers/dma/pch_dma.c
++++ b/drivers/dma/pch_dma.c
+@@ -665,16 +665,12 @@ static struct dma_async_tx_descriptor *pd_prep_slave_sg(struct dma_chan *chan,
+ 	return NULL;
+ }
+ 
+-static int pd_device_control(struct dma_chan *chan, enum dma_ctrl_cmd cmd,
+-			     unsigned long arg)
++static int pd_device_terminate_all(struct dma_chan *chan)
+ {
+ 	struct pch_dma_chan *pd_chan = to_pd_chan(chan);
+ 	struct pch_dma_desc *desc, *_d;
+ 	LIST_HEAD(list);
+ 
+-	if (cmd != DMA_TERMINATE_ALL)
+-		return -ENXIO;
+-
+ 	spin_lock_irq(&pd_chan->lock);
+ 
+ 	pdc_set_mode(&pd_chan->chan, DMA_CTL0_DISABLE);
+@@ -932,7 +928,7 @@ static int pch_dma_probe(struct pci_dev *pdev,
+ 	pd->dma.device_tx_status = pd_tx_status;
+ 	pd->dma.device_issue_pending = pd_issue_pending;
+ 	pd->dma.device_prep_slave_sg = pd_prep_slave_sg;
+-	pd->dma.device_control = pd_device_control;
++	pd->dma.device_terminate_all = pd_device_terminate_all;
+ 
+ 	err = dma_async_device_register(&pd->dma);
+ 	if (err) {

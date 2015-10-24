@@ -1,0 +1,32 @@
+From 63c6509b0d8bb48454b7b16b560a1779dec581c1 Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Tue, 2 Jun 2015 18:04:02 +0800
+Subject: [PATCH] ARM: dts: sun8i-a33: Add pinmux setting for uart0 on PB pins
+
+The A33 adds an additional pinmux option for uart0 on the PB pins.
+This was not present on the A23. Nor is it available on the H3,
+which does not have the PB pingroup.
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun8i-a33.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun8i-a33.dtsi b/arch/arm/boot/dts/sun8i-a33.dtsi
+index 9b43bc6..85ee080 100644
+--- a/arch/arm/boot/dts/sun8i-a33.dtsi
++++ b/arch/arm/boot/dts/sun8i-a33.dtsi
+@@ -86,4 +86,12 @@
+ 	compatible = "allwinner,sun8i-a33-pinctrl";
+ 	interrupts = <GIC_SPI 15 IRQ_TYPE_LEVEL_HIGH>,
+ 		     <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
++
++	uart0_pins_b: uart0@1 {
++		allwinner,pins = "PB0", "PB1";
++		allwinner,function = "uart0";
++		allwinner,drive = <SUN4I_PINCTRL_10_MA>;
++		allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
++	};
++
+ };

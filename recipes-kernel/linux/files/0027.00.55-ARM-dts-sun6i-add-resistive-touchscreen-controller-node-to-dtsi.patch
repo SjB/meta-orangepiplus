@@ -1,0 +1,33 @@
+From 4ec45cd3fc239fc93649ac34bd9463d8cdc26d84 Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Sat, 24 Jan 2015 22:33:48 +0800
+Subject: [PATCH] ARM: dts: sun6i: Add resistive touchscreen controller node to
+ dtsi
+
+Now that we support the sun6i variant of the touchscreen controller,
+add the device node to the dtsi so we can use it.
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun6i-a31.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun6i-a31.dtsi b/arch/arm/boot/dts/sun6i-a31.dtsi
+index 0c17079..805f67a 100644
+--- a/arch/arm/boot/dts/sun6i-a31.dtsi
++++ b/arch/arm/boot/dts/sun6i-a31.dtsi
+@@ -640,6 +640,13 @@
+ 			reg = <0x01c20ca0 0x20>;
+ 		};
+ 
++		rtp: rtp@01c25000 {
++			compatible = "allwinner,sun6i-a31-ts";
++			reg = <0x01c25000 0x100>;
++			interrupts = <GIC_SPI 28 IRQ_TYPE_LEVEL_HIGH>;
++			#thermal-sensor-cells = <0>;
++		};
++
+ 		uart0: serial@01c28000 {
+ 			compatible = "snps,dw-apb-uart";
+ 			reg = <0x01c28000 0x400>;

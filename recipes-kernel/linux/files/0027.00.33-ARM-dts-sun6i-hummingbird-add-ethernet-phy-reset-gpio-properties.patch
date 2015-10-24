@@ -1,0 +1,32 @@
+From e1391804967f38f64e6e73cab45da7fa5f451f6e Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Wed, 3 Dec 2014 15:19:13 +0800
+Subject: [PATCH] ARM: dts: sun6i: hummingbird: Add ethernet phy reset gpio
+ properties
+
+On the Hummingbird A31 board, the RTL8211E ethernet phy has its reset
+line connect to a gpio pin, instead of floating like on other boards.
+Add the stmmac properties for describing the reset gpio.
+
+The reset delays were taken from the RTL8211E datasheet.
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun6i-a31-hummingbird.dts | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun6i-a31-hummingbird.dts b/arch/arm/boot/dts/sun6i-a31-hummingbird.dts
+index 6e924d9..55a367a 100644
+--- a/arch/arm/boot/dts/sun6i-a31-hummingbird.dts
++++ b/arch/arm/boot/dts/sun6i-a31-hummingbird.dts
+@@ -139,6 +139,9 @@
+ 			pinctrl-0 = <&gmac_pins_rgmii_a>;
+ 			phy = <&phy1>;
+ 			phy-mode = "rgmii";
++			snps,reset-gpio = <&pio 0 21 0>;
++			snps,reset-active-low;
++			snps,reset-delays-us = <0 10000 30000>;
+ 			status = "okay";
+ 
+ 			phy1: ethernet-phy@1 {

@@ -1,0 +1,54 @@
+From 92395f569c36cbf077fe3f090e3cee85ad8a0926 Mon Sep 17 00:00:00 2001
+From: Aleksei Mamlin <mamlinav@gmail.com>
+Date: Mon, 19 Jan 2015 22:35:22 +0300
+Subject: [PATCH] ARM: dts: sunxi: Add missing mdio label
+
+This patch add missing mdio label for sun[457]i.
+
+Signed-off-by: Aleksei Mamlin <mamlinav@gmail.com>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun4i-a10.dtsi  | 2 +-
+ arch/arm/boot/dts/sun5i-a10s.dtsi | 2 +-
+ arch/arm/boot/dts/sun7i-a20.dtsi  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm/boot/dts/sun4i-a10.dtsi b/arch/arm/boot/dts/sun4i-a10.dtsi
+index af11f5d..234e4de 100644
+--- a/arch/arm/boot/dts/sun4i-a10.dtsi
++++ b/arch/arm/boot/dts/sun4i-a10.dtsi
+@@ -465,7 +465,7 @@
+ 			status = "disabled";
+ 		};
+ 
+-		mdio@01c0b080 {
++		mdio: mdio@01c0b080 {
+ 			compatible = "allwinner,sun4i-a10-mdio";
+ 			reg = <0x01c0b080 0x14>;
+ 			status = "disabled";
+diff --git a/arch/arm/boot/dts/sun5i-a10s.dtsi b/arch/arm/boot/dts/sun5i-a10s.dtsi
+index c570a9b..ac919e6 100644
+--- a/arch/arm/boot/dts/sun5i-a10s.dtsi
++++ b/arch/arm/boot/dts/sun5i-a10s.dtsi
+@@ -361,7 +361,7 @@
+ 			status = "disabled";
+ 		};
+ 
+-		mdio@01c0b080 {
++		mdio: mdio@01c0b080 {
+ 			compatible = "allwinner,sun4i-a10-mdio";
+ 			reg = <0x01c0b080 0x14>;
+ 			status = "disabled";
+diff --git a/arch/arm/boot/dts/sun7i-a20.dtsi b/arch/arm/boot/dts/sun7i-a20.dtsi
+index 929630a..270cddd 100644
+--- a/arch/arm/boot/dts/sun7i-a20.dtsi
++++ b/arch/arm/boot/dts/sun7i-a20.dtsi
+@@ -580,7 +580,7 @@
+ 			status = "disabled";
+ 		};
+ 
+-		mdio@01c0b080 {
++		mdio: mdio@01c0b080 {
+ 			compatible = "allwinner,sun4i-a10-mdio";
+ 			reg = <0x01c0b080 0x14>;
+ 			status = "disabled";

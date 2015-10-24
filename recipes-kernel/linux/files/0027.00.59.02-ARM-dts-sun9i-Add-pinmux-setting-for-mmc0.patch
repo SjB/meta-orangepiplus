@@ -1,0 +1,37 @@
+From cd23e2e5ce874cef5c1adc469ca93c9a373b3804 Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Tue, 13 Jan 2015 09:37:31 +0800
+Subject: [PATCH] ARM: dts: sun9i: Add pinmux setting for mmc0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+mmc0 is only available on port F, and is always used with a 4 bit wide
+bus for the onboard micro-sd slot.
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Andreas Färber <afaerber@suse.de>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun9i-a80.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun9i-a80.dtsi b/arch/arm/boot/dts/sun9i-a80.dtsi
+index 9d0a66c..820b4c5 100644
+--- a/arch/arm/boot/dts/sun9i-a80.dtsi
++++ b/arch/arm/boot/dts/sun9i-a80.dtsi
+@@ -409,6 +409,14 @@
+ 				allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
+ 			};
+ 
++			mmc0_pins: mmc0 {
++				allwinner,pins = "PF0", "PF1" ,"PF2", "PF3",
++						 "PF4", "PF5";
++				allwinner,function = "mmc0";
++				allwinner,drive = <SUN4I_PINCTRL_30_MA>;
++				allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
++			};
++
+ 			uart0_pins_a: uart0@0 {
+ 				allwinner,pins = "PH12", "PH13";
+ 				allwinner,function = "uart0";

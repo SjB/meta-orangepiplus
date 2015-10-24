@@ -1,0 +1,31 @@
+From dbbcd881ee97100077295f48fcc7a53a8ce95c52 Mon Sep 17 00:00:00 2001
+From: Hans de Goede <hdegoede@redhat.com>
+Date: Sun, 23 Nov 2014 14:38:14 +0100
+Subject: [PATCH] ARM: dts: sun6i: Add pinmux settings for the ir pins
+
+Add pinmux settings for the ir receive pin of the A31.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun6i-a31.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun6i-a31.dtsi b/arch/arm/boot/dts/sun6i-a31.dtsi
+index f47156b..02d990a 100644
+--- a/arch/arm/boot/dts/sun6i-a31.dtsi
++++ b/arch/arm/boot/dts/sun6i-a31.dtsi
+@@ -901,6 +901,13 @@
+ 			#interrupt-cells = <2>;
+ 			#size-cells = <0>;
+ 			#gpio-cells = <3>;
++
++			ir_pins_a: ir@0 {
++				allwinner,pins = "PL4";
++				allwinner,function = "s_ir";
++				allwinner,drive = <0>;
++				allwinner,pull = <0>;
++			};
+ 		};
+ 	};
+ };

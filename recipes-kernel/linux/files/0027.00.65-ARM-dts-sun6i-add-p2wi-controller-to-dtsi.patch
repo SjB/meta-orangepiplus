@@ -1,0 +1,48 @@
+From fcd601387d70db31ac5e0a17ca584f088821b459 Mon Sep 17 00:00:00 2001
+From: Boris BREZILLON <boris.brezillon@free-electrons.com>
+Date: Tue, 10 Mar 2015 19:59:12 +0800
+Subject: [PATCH] ARM: dts: sun6i: add p2wi controller node to dtsi
+
+The p2wi controller has only one possible pinmux setting. Use it by
+default in the dtsi, instead of having to set it in each board's dts.
+
+Signed-off-by: Boris BREZILLON <boris.brezillon@free-electrons.com>
+[wens@csie.org: reformat commit title; rename p2wi pins and use as default]
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+---
+ arch/arm/boot/dts/sun6i-a31.dtsi | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun6i-a31.dtsi b/arch/arm/boot/dts/sun6i-a31.dtsi
+index fa2f403..92abea20 100644
+--- a/arch/arm/boot/dts/sun6i-a31.dtsi
++++ b/arch/arm/boot/dts/sun6i-a31.dtsi
+@@ -973,6 +973,27 @@
+ 				allwinner,drive = <SUN4I_PINCTRL_10_MA>;
+ 				allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
+ 			};
++
++			p2wi_pins: p2wi {
++				allwinner,pins = "PL0", "PL1";
++				allwinner,function = "s_p2wi";
++				allwinner,drive = <SUN4I_PINCTRL_10_MA>;
++				allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
++			};
++		};
++
++		p2wi: i2c@01f03400 {
++			compatible = "allwinner,sun6i-a31-p2wi";
++			reg = <0x01f03400 0x400>;
++			interrupts = <GIC_SPI 39 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&apb0_gates 3>;
++			clock-frequency = <100000>;
++			resets = <&apb0_rst 3>;
++			pinctrl-names = "default";
++			pinctrl-0 = <&p2wi_pins>;
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
+ 		};
+ 	};
+ };
