@@ -1,0 +1,91 @@
+Patch for generation of u-boot of the OrangePI 2
+
+--- u-boot-2011.09/drivers/video_sunxi/sunxi_v3/de/lowlevel_sun8iw7/de_wb.c.orig
++++ u-boot-2011.09/drivers/video_sunxi/sunxi_v3/de/lowlevel_sun8iw7/de_wb.c
+@@ -272,20 +272,22 @@
+ 		wb_dev[sel]->bypass.dwval |= 0x00000001;
+ 	}
+ 	//Coarse scaling
++	cs_out_w0 = out_window_w << 1;
++	cs_out_h0 = out_window_h << 1;
+ 	if((crop_w > (out_window_w<<1))&&(crop_h > (out_window_h<<1)))
+ 	{
+ 		wb_dev[sel]->bypass.dwval |= 0x00000002;
+ 		wb_dev[sel]->cs_horz.dwval = crop_w |(out_window_w<<17);
+ 		wb_dev[sel]->cs_vert.dwval = crop_h |(out_window_h<<17);
+-		cs_out_w0 = out_window_w<<1;
+-		cs_out_h0 = out_window_h<<1;
++//		cs_out_w0 = out_window_w<<1;
++//		cs_out_h0 = out_window_h<<1;
+ 	}
+ 	if((crop_w > (out_window_w<<1))&&(crop_h <= (out_window_h<<1)))
+ 	{
+ 		wb_dev[sel]->bypass.dwval |= 0x00000002;
+ 		wb_dev[sel]->cs_horz.dwval = crop_w |(out_window_w<<17);
+ 		wb_dev[sel]->cs_vert.dwval = 0;
+-		cs_out_w0 = out_window_w<<1;
++//		cs_out_w0 = out_window_w<<1;
+ 		cs_out_h0 = crop_h;
+ 	}
+ 	if((crop_w <= (out_window_w<<1))&&(crop_h > (out_window_h<<1)))
+@@ -293,7 +295,7 @@
+ 		wb_dev[sel]->bypass.dwval |= 0x00000002;
+ 		wb_dev[sel]->cs_horz.dwval = 0;
+ 		wb_dev[sel]->cs_vert.dwval = crop_h |(out_window_h<<17);
+-		cs_out_w0 = crop_w;
++//		cs_out_w0 = crop_w;
+ 		cs_out_h0 = out_window_h<<1;
+ 	}
+ 	if((crop_w <= (out_window_w<<1))&&(crop_h <= (out_window_h<<1)))
+--- u-boot-2011.09/include/configs/sun8iw7p1.h.orig
++++ u-boot-2011.09/include/configs/sun8iw7p1.h
+@@ -77,8 +77,8 @@
+ 	(CONFIG_SYS_INIT_RAM_ADDR + CONFIG_SYS_INIT_SP_OFFSET)
+ 
+ #define CONFIG_NR_DRAM_BANKS		1
+-#define PHYS_SDRAM_1				CONFIG_SYS_SDRAM_BASE	/* SDRAM Bank #1 */
+-#define PHYS_SDRAM_1_SIZE			(512 << 20)				/* 0x20000000, 512 MB Bank #1 */
++#define PHYS_SDRAM_1			CONFIG_SYS_SDRAM_BASE	/* SDRAM Bank #1 */
++#define PHYS_SDRAM_1_SIZE		(512 << 20)		/* 0x20000000, 512 MB Bank #1 */
+ 
+ #define CONFIG_NONCACHE_MEMORY
+ #define CONFIG_NONCACHE_MEMORY_SIZE (16 * 1024 * 1024)
+@@ -317,20 +317,32 @@
+ #define CONFIG_CMD_SAVEENV
+ 
+ #define CONFIG_EXTRA_ENV_SETTINGS \
+-	"bootdelay=3\0" \
+-	"bootcmd=run setargs_nand boot_normal\0" \
++	"scriptaddr=0x44000000\0" \
++	"loadbootenv=" \
++		"fatload mmc 0:1 $scriptaddr uEnv.txt\0" \
++	"loaduenv=if run loadbootenv; then " \
++		"env import -t ${scriptaddr} ${filesize};" \
++		"fi\0" \
++	"bootdelay=2\0" \
++	"bootcmd=run setargs_mmc loaduenv boot_normal\0" \
+ 	"console=ttyS0,115200\0" \
+ 	"nand_root=/dev/nandd\0" \
+-	"mmc_root=/dev/mmcblk0p7\0" \
++	"mmc_root=/dev/mmcblk0p2\0" \
+ 	"init=/init\0" \
+ 	"loglevel=8\0" \
+ 	"setargs_nand=setenv bootargs console=${console} root=${nand_root}" \
+ 	"init=${init} loglevel=${loglevel} partitions=${partitions}\0" \
+ 	"setargs_mmc=setenv bootargs console=${console} root=${mmc_root}" \
+ 	"init=${init} loglevel=${loglevel} partitions=${partitions}\0" \
+-	"boot_normal=sunxi_flash read 40007800 boot;boota 40007800\0" \
++	"boot_normal=fatload mmc 0:1 0x43000000 script.bin;"\
++		"fatload mmc 0:1 40007800 uimage;"\
++		"bootm 40007800\0" \
+ 	"boot_recovery=sunxi_flash read 40007800 recovery;boota 40007800\0" \
+ 	"boot_fastboot=fastboot\0"
++//jfm changes
++// no 'echo'
++//		"echo Loaded environment from uEnv.txt;"
++//		"echo bootargs ${bootargs};"
+ 
+ #define CONFIG_SUNXI_SPRITE_ENV_SETTINGS	\
+ 	"bootdelay=0\0" \
+ 
+ 

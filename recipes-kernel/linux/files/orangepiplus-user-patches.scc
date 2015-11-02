@@ -174,3 +174,4 @@ patch 0027.00.9560-ARM-dts-sun8i-a33-add-pinmux-setting-for-uart0-on-PB-pins.pat
 patch 0027.00.9565-ARM-dts-sun8i-add-a33-usb-phy-and-otg-nodes.patch
 patch 0027.00.9570-ARM-dts-sunxi-add-gulator-boot-on-to-usb-host-port-regulator-nodes.patch
 patch 0028-Revert-drm-kill-drm_sman.patch
+patch 0029-ARM-supply-a-dtb-file-to-be-appended.patch

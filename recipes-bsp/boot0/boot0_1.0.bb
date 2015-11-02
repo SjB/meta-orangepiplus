@@ -1,6 +1,6 @@
 SUMMARY = "Generates the boot0 image with correct system info"
 SECTION = "bootloaders"
-PROVIDES = "virtual/bootloader"
+PROVIDES = "virtual/bootloader0"
 DEPENDS = "pack-tools-native dos2unix-native"
 
 LICENSE = "GPLv2+"

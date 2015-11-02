@@ -1,0 +1,40 @@
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index 97d07ed..2fc9abb 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -1890,6 +1890,16 @@ config ARM_APPENDED_DTB
+ 	  location into r2 of a bootloader provided DTB is always preferable
+ 	  to this option.
+ 
++config ARM_APPENDED_DTB_FILE
++	string "DTB file"
++	depends on ARM_APPENDED_DTB
++	default ""
++	help
++	  This gives the name of file from the build directory to append
++	  to the zImage after it has been built.
++
++	  If you are not sure, leave it blank.
++
+ config ARM_ATAG_DTB_COMPAT
+ 	bool "Supplement the appended DTB with traditional ATAG information"
+ 	depends on ARM_APPENDED_DTB
+diff --git a/arch/arm/boot/Makefile b/arch/arm/boot/Makefile
+index 6798e0f..6f4c1d4 100644
+--- a/arch/arm/boot/Makefile
++++ b/arch/arm/boot/Makefile
+@@ -51,8 +51,14 @@ $(obj)/Image: vmlinux FORCE
+ $(obj)/compressed/vmlinux: $(obj)/Image FORCE
+ 	$(Q)$(MAKE) $(build)=$(obj)/compressed $@
+ 
++# Rule to optionally append a DTB
++dtbfile := $(shell echo $(CONFIG_ARM_APPENDED_DTB_FILE))
++quiet_cmd_append = CAT     $@
++      cmd_append = (cat /dev/null $(dtbfile) >> $@)
++
+ $(obj)/zImage:	$(obj)/compressed/vmlinux FORCE
+ 	$(call if_changed,objcopy)
++	$(call if_changed,append)
+ 	@$(kecho) '  Kernel: $@ is ready'
+ 
+ endif

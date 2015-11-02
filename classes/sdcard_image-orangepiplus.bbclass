@@ -7,7 +7,7 @@ inherit image_types
 IMAGE_TYPEDEP_allwinner-sdcard = "${SDIMG_ROOTFS_TYPE}"
 
 # Set kernel and boot loader
-IMAGE_BOOTLOADER ?= "boot0"
+IMAGE_BOOTLOADER ?= "boot0 u-boot"
 
 # Set initramfs extension
 KERNEL_INITRAMFS ?= ""
@@ -31,7 +31,6 @@ IMAGE_DEPENDS_allwinner-sdcard = " \
 			dosfstools-native \
 			virtual/kernel \
 			${IMAGE_BOOTLOADER} \
-			${@bb.utils.contains('KERNEL_IMAGETYPE', 'uImage', 'u-boot', '',d)} \
 			"
 
 # SD card image name
@@ -71,7 +70,7 @@ create_image_allwinner_sdcard() {
 	# Create partition table
 	parted -s ${SDIMG} mklabel msdos
 	# Create raw partition for boot0 and u-boot
-	parted -s ${SDIMG} unit KiB mkpart primary 1 ${IMAGE_ROOTFS_ALIGNMENT}
+	# parted -s ${SDIMG} unit KiB mkpart primary 1 ${IMAGE_ROOTFS_ALIGNMENT}
 	# Create boot partition and mark it as bootable
 	parted -s ${SDIMG} unit KiB mkpart primary fat32 ${IMAGE_ROOTFS_ALIGNMENT} $(expr ${BOOT_SPACE_ALIGNED} \+ ${IMAGE_ROOTFS_ALIGNMENT})
 	# Create rootfs partition to the end of disk
@@ -81,7 +80,7 @@ create_image_allwinner_sdcard() {
 	echo "Copying boot0 to image"
 	dd if=${DEPLOY_DIR_IMAGE}/${BOOT0_IMAGE} of=${SDIMG} conv=notrunc seek=8 bs=1024
 	echo "Copying u-boot to image"
-	dd if=${DEPLOY_DIR_IMAGE}/u-boot.${UBOOT_SUFFIX} of=${SDIMG} conv=notrunc seek=32 bs=1024
+	dd if=${DEPLOY_DIR_IMAGE}/u-boot.${UBOOT_SUFFIX} of=${SDIMG} conv=notrunc seek=16400 bs=1024
 
 	echo "Create vfat image with boot files"
 	# Create a vfat image with boot files

@@ -1,0 +1,45 @@
+diff --git a/linux-3.4/arch/arm/mach-sunxi/power/brom/Makefile b/linux-3.4/arch/arm/mach-sunxi/power/brom/Makefile
+index 5bce9ee..0384181 100755
+--- a/linux-3.4/arch/arm/mach-sunxi/power/brom/Makefile
++++ b/linux-3.4/arch/arm/mach-sunxi/power/brom/Makefile
+@@ -23,7 +23,7 @@ resumes-y :=   resumes.o        \
+ resumes-y := $(addprefix $(obj)/,$(resumes-y))
+ 
+ $(obj)/resumes.code: $(obj)/resumes.bin
+-	$(Q)$(obj)/gen_check_code $(obj)/resumes.bin $(obj)/resumes.code
++	$(Q)$(KBUILD_SRC)/$(obj)/gen_check_code $(obj)/resumes.bin $(obj)/resumes.code
+ 
+ $(obj)/resumes.bin: $(obj)/resumes.elf FORCE
+ 	$(Q)$(CROSS_COMPILE)objcopy -O binary $(obj)/resumes.elf $(obj)/resumes.bin
+@@ -35,8 +35,8 @@ $(obj)/resumes.elf: $(obj)/sun9i_brom_scatter.scat $(resumes-y)
+ endif
+ 
+ ifneq ($(strip $(CONFIG_ARCH_SUN8I)),)
+-$(obj)/resumes.elf: $(obj)/sun8i_brom_scatter.scat $(resumes-y)
+-	$(Q)$(CROSS_COMPILE)ld -T $(obj)/sun8i_brom_scatter.scat  -EL  $(resumes-y) -o $(obj)/resumes.elf  -Map $(obj)/resumes.map
++$(obj)/resumes.elf: $(KBUILD_SRC)/$(obj)/sun8i_brom_scatter.scat $(resumes-y)
++	$(Q)$(CROSS_COMPILE)ld -T $(KBUILD_SRC)/$(obj)/sun8i_brom_scatter.scat  -EL  $(resumes-y) -o $(obj)/resumes.elf  -Map $(obj)/resumes.map
+ 	$(Q)$(CROSS_COMPILE)objdump -D $(obj)/resumes.elf > $(obj)/resumes.lst
+ endif
+ 
+diff --git a/linux-3.4/drivers/arisc/binary/Makefile b/linux-3.4/drivers/arisc/binary/Makefile
+index ab3d5d2..2266ffc 100755
+--- a/linux-3.4/drivers/arisc/binary/Makefile
++++ b/linux-3.4/drivers/arisc/binary/Makefile
+@@ -29,11 +29,11 @@ ifdef CONFIG_ARCH_SUN9IW1P1
+ PLATFORM=arisc_sun9iw1p1
+ endif
+ 
+-$(obj)/$(PLATFORM).bin : $(obj)/$(PLATFORM).code
+-	cp $(obj)/$(PLATFORM).code $(obj)/$(PLATFORM).tar.bz2; \
+-	tar -xjvf $(obj)/$(PLATFORM).tar.bz2 -C $(obj)/; \
+-	cp $(obj)/arisc_package/$(PLATFORM).bin $(obj)/$(PLATFORM).bin; \
+-	cp $(obj)/arisc_package/$(PLATFORM).tar.bz2.aes $(obj)/arisc; \
++$(obj)/$(PLATFORM).bin : $(KBUILD_SRC)/$(obj)/$(PLATFORM).code
++	cp $(KBUILD_SRC)/$(obj)/$(PLATFORM).code $(obj)/$(PLATFORM).tar.bz2; \
++	tar -xjvf $(obj)/$(PLATFORM).tar.bz2 -C $(obj)/; \
++	cp $(obj)/arisc_package/$(PLATFORM).bin $(obj)/$(PLATFORM).bin; \
++	cp $(obj)/arisc_package/$(PLATFORM).tar.bz2.aes $(obj)/arisc; \
+ 	rm -rf $(obj)/arisc_package;\
+ 	rm -rf $(obj)/$(PLATFORM).tar.bz2;
+ 

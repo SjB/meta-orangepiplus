@@ -1,0 +1,46 @@
+commit 9c2c9cdb240b4239c0fc756086b028de89f013f9
+Author: Robbert-Jan de Jager <robojan1@hotmail.com>
+Date:   Thu Oct 15 17:05:03 2015 +0200
+
+    Removed the copying to dest dir
+
+diff --git a/tools/setlocalversion b/u-boot-2011.09/tools/setlocalversion
+old mode 100644
+new mode 100755
+diff --git a/Makefile b/u-boot-2011.09/Makefile
+index bf502fd..8b92c22 100644
+--- a/Makefile
++++ b/Makefile
+@@ -448,19 +448,19 @@ $(obj)u-boot.ubl:       $(obj)u-boot-nand.bin
+ 
+ $(obj)u-boot-$(TARGET).bin:	$(obj)u-boot.bin
+ 		@cp $(obj)u-boot.bin         $(obj)u-boot-$(CONFIG_TARGET_NAME).bin
+-		@if [ -z "$(findstring _nor, $(CONFIG_TARGET_NAME))" ]; then \
+-			if [ -z "$(findstring $(OTA_TEST_NAME), $(SUNXI_MODE))" ]; then \
+-				cp -v $(obj)u-boot-$(CONFIG_TARGET_NAME).bin  $(TOPDIR)/../../tools/pack/chips/$(CONFIG_TARGET_NAME)/bin/u-boot-$(CONFIG_TARGET_NAME).bin; \
+-			else \
+-				cp -v $(obj)u-boot-$(CONFIG_TARGET_NAME).bin  $(TOPDIR)/../../tools/pack/chips/$(CONFIG_TARGET_NAME)/bin/u-boot-$(CONFIG_TARGET_NAME)-$(SUNXI_MODE).bin; \
+-			fi \
+-		else	\
+-			if [ -z "$(findstring $(OTA_TEST_NAME), $(SUNXI_MODE))" ]; then \
+-				cp -v $(obj)u-boot-$(CONFIG_TARGET_NAME).bin  $(TOPDIR)/../../tools/pack/chips/$(CONFIG_PLATFORM_NAME)/bin/u-boot-spinor-$(CONFIG_PLATFORM_NAME).bin; \
+-			else \
+-				cp -v $(obj)u-boot-$(CONFIG_TARGET_NAME).bin  $(TOPDIR)/../../tools/pack/chips/$(CONFIG_PLATFORM_NAME)/bin/u-boot-spinor-$(CONFIG_PLATFORM_NAME)-$(SUNXI_MODE).bin; \
+-			fi \
+-		fi
++#		@if [ -z "$(findstring _nor, $(CONFIG_TARGET_NAME))" ]; then \
++#			if [ -z "$(findstring $(OTA_TEST_NAME), $(SUNXI_MODE))" ]; then \
++#				cp -v $(obj)u-boot-$(CONFIG_TARGET_NAME).bin  $(TOPDIR)/../../tools/pack/chips/$(CONFIG_TARGET_NAME)/bin/u-boot-$(CONFIG_TARGET_NAME).bin; \
++#			else \
++#				cp -v $(obj)u-boot-$(CONFIG_TARGET_NAME).bin  $(TOPDIR)/../../tools/pack/chips/$(CONFIG_TARGET_NAME)/bin/u-boot-$(CONFIG_TARGET_NAME)-$(SUNXI_MODE).bin; \
++#			fi \
++#		else	\
++#			if [ -z "$(findstring $(OTA_TEST_NAME), $(SUNXI_MODE))" ]; then \
++#				cp -v $(obj)u-boot-$(CONFIG_TARGET_NAME).bin  $(TOPDIR)/../../tools/pack/chips/$(CONFIG_PLATFORM_NAME)/bin/u-boot-spinor-$(CONFIG_PLATFORM_NAME).bin; \
++#			else \
++#				cp -v $(obj)u-boot-$(CONFIG_TARGET_NAME).bin  $(TOPDIR)/../../tools/pack/chips/$(CONFIG_PLATFORM_NAME)/bin/u-boot-spinor-$(CONFIG_PLATFORM_NAME)-$(SUNXI_MODE).bin; \
++#			fi \
++#		fi
+ 
+ GEN_UBOOT = \
+ 		UNDEF_SYM=`$(OBJDUMP) -x $(LIBBOARD) $(LIBS) | \

@@ -11,6 +11,7 @@ SRC_URI += "file://orangepiplus-standard.scc \
             file://orangepiplus-user-patches.scc \
             file://orangepiplus-user-features.scc \
             file://defconfig \
+            file://devtree.cfg \
            "
 
 # uncomment and replace these SRCREVs with the real commit ids once you've had

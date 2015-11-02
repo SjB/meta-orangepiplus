@@ -1,0 +1,61 @@
+diff --git a/linux-3.4/drivers/input/touchscreen/aw5x06/Makefile b/linux-3.4/drivers/input/touchscreen/aw5x06/Makefile
+index 78aacd1..2180f0e 100755
+--- a/linux-3.4/drivers/input/touchscreen/aw5x06/Makefile
++++ b/linux-3.4/drivers/input/touchscreen/aw5x06/Makefile
+@@ -5,4 +5,7 @@
+ # Each configuration option enables a list of files.
+ 
+ obj-$(CONFIG_TOUCHSCREEN_AW5X06_TS)           += aw5306_ts.o
+-aw5306_ts-objs := AW5306_ts.o AW5306_userpara.o libAW5306
++aw5306_ts-objs := AW5306_ts.o AW5306_userpara.o libAW5306.a
++
++$(obj)/libAW5306.a: $(KBUILD_SRC)/$(src)/libAW5306
++	$(Q)cp $(KBUILD_SRC)/$(src)/libAW5306 $(obj)/libAW5306.a
+diff --git a/linux-3.4/drivers/input/touchscreen/gslx680new/Makefile b/linux-3.4/drivers/input/touchscreen/gslx680new/Makefile
+index 43598cc..e4b7522 100755
+--- a/linux-3.4/drivers/input/touchscreen/gslx680new/Makefile
++++ b/linux-3.4/drivers/input/touchscreen/gslx680new/Makefile
+@@ -5,4 +5,7 @@
+ # Each configuration option enables a list of files.
+ 
+ obj-$(CONFIG_TOUCHSCREEN_GSLX680NEW) += gslX680new.o
+-gslX680new-objs := gslX680.o gsl_point_id_20131111
++gslX680new-objs := gslX680.o gsl_point_id_20131111.a
++
++$(obj)/gsl_point_id_20131111.a: $(KBUILD_SRC)/$(src)/gsl_point_id_20131111
++	$(Q)cp $(KBUILD_SRC)/$(src)/gsl_point_id_20131111 $(obj)/gsl_point_id_20131111.a
+diff --git a/linux-3.4/drivers/media/video/sunxi-vfe/Makefile b/linux-3.4/drivers/media/video/sunxi-vfe/Makefile
+index 9765dc1..6f25380 100755
+--- a/linux-3.4/drivers/media/video/sunxi-vfe/Makefile
++++ b/linux-3.4/drivers/media/video/sunxi-vfe/Makefile
+@@ -14,10 +14,10 @@ vfe_v4l2-y					+= config.o
+ vfe_v4l2-y					+= utility/sensor_info.o
+ vfe_v4l2-y					+= utility/cfg_op.o
+ vfe_v4l2-y					+= vfe.o
+-vfe_v4l2-y					+= lib/libisp
++vfe_v4l2-y					+= lib/libisp.a
+ 
+ ifneq ($(strip $(CONFIG_ARCH_SUN9I)),)
+-vfe_v4l2-y					+= lib/lib_mipicsi2_v2
++vfe_v4l2-y					+= lib/lib_mipicsi2_v2.a
+ else ifneq ($(strip $(CONFIG_ARCH_SUN8IW6)),)
+ obj-$(CONFIG_CSI_VFE) += vfe_v4l2.o
+ vfe_v4l2-y					+= mipi_csi/bsp_mipi_csi.o
+@@ -28,5 +28,14 @@ vfe_v4l2-y					+= mipi_csi/bsp_mipi_csi_v1.o \
+ 							mipi_csi/dphy/dphy_reg.o
+ else
+ obj-$(CONFIG_CSI_VFE) += vfe_v4l2.o
+-vfe_v4l2-y					+= lib/lib_mipicsi2_v1
+-endif
+\ No newline at end of file
++vfe_v4l2-y					+= lib/lib_mipicsi2_v1.a
++endif
++
++$(obj)/lib/libisp.a: $(KBUILD_SRC)/$(src)/lib/libisp
++	$(Q)cp $(KBUILD_SRC)/$(src)/lib/libisp $(obj)/lib/libisp.a
++
++$(obj)/lib/lib_mipicsi2_v2.a: $(KBUILD_SRC)/$(src)/lib/lib_mipicsi2_v2
++	$(Q)cp $(KBUILD_SRC)/$(src)/lib/lib_mipicsi2_v2 $(obj)/lib/lib_mipicsi2_v2.a
++
++$(obj)/lib/lib_mipicsi2_v1.a: $(KBUILD_SRC)/$(src)/lib/lib_mipicsi2_v1
++	$(Q)cp $(KBUILD_SRC)/$(src)/lib/lib_mipicsi2_v1 $(obj)/lib/lib_mipicsi2_v1.a

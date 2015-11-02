@@ -10,7 +10,7 @@ S .= "/u-boot-2011.09"
 PACKTOOL_DIR ?= "${STAGING_DATADIR_NATIVE}/packtools/"
 
 #patches
-FILESEXTRAPATHS_prepend :=  "${THISDIR}/patches:${THISDIR}/../files:"
+FILESEXTRAPATHS_prepend :=  "${THISDIR}/files:${THISDIR}/../files:"
 SRC_URI += "file://0001-orangepi_bugs_fixed.patch \
 	file://0002-no_copying_external.patch \
 	file://${MACHINE}.fex;subdir=git/u-boot-2011.09/"
@@ -19,7 +19,9 @@ OVERRIDES .= "${@bb.utils.contains("TUNE_FEATURES", "vfpv4", ":vfpv4", "", d)}"
 
 SRC_URI_append_vfpv4 = " file://0003-neon-vfpv4-float.patch"
 
-do_patch_config() {
+do_compile_append() {
+	oe_runmake spl
+
 	# Copy system config 
 	cp -fv ${MACHINE}.fex ${B}/sys_config.fex
 
@@ -62,5 +64,3 @@ do_patch_config() {
 	fi
 	
 }
-
-addtask do_patch_config after do_compile before do_install before do_deploy
