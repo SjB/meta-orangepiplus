@@ -10,11 +10,12 @@ inherit uboot-config deploy
 FILESEXTRAPATHS_prepend :=  "${THISDIR}/${PN}:${THISDIR}/../files:"
 
 
-SRC_URI = "file://uboot.bin;md5=aea6a3caa42012e4efa5dc99d20e0b02;sha256=9a1024b4e7e50b9d97d6051a1e25496f0236db73048278f8969b49529d1180c1"
+SRC_URI = "file://uboot.bin;md5=aea6a3caa42012e4efa5dc99d20e0b02;sha256=9a1024b4e7e50b9d97d6051a1e25496f0236db73048278f8969b49529d1180c1 \
+	file://uEnv.txt"
 	
 
 LICENSE = "GPLv2+"
-LIC_FILES_CHKSUM = "file://uboot.bin;md5=aea6a3caa42012e4efa5dc99d20e0b02"
+LIC_FILES_CHKSUM = "file://uboot.bin;md5=58e42cf2c641e22119e4ec52b36eac30"
 
 S = "${WORKDIR}"
 
@@ -66,6 +67,14 @@ do_deploy() {
 	rm -f ${UBOOT_BINARY} ${UBOOT_SYMLINK}
 	ln -sf ${UBOOT_IMAGE} ${UBOOT_SYMLINK}
 	ln -sf ${UBOOT_IMAGE} ${UBOOT_BINARY}
+	
+	if [ "x${UBOOT_ENV}" != "x" ]; then
+		echo Deploying ${UBOOT_ENV_BINARY}
+		install ${S}/${UBOOT_ENV_BINARY} ${DEPLOYDIR}/${UBOOT_ENV_IMAGE}
+		rm -f ${UBOOT_ENV_BINARY} ${UBOOT_ENV_SYMLINK}
+		ln -sf ${UBOOT_ENV_IMAGE} ${UBOOT_ENV_BINARY}
+		ln -sf ${UBOOT_ENV_IMAGE} ${UBOOT_ENV_SYMLINK}
+	fi
 }
 
 addtask deploy before do_build after do_compile

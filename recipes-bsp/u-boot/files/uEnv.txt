@@ -1,0 +1,12 @@
+console=ttyS0,115200
+fbconsole=tty0
+root=/dev/mmcblk0p2
+init=/init
+loglevel=8
+scriptfile=script.bin
+uimage=uimage
+setargs=setenv bootargs earlyprintk=${console} console=${console} console=${fbconsole} root=${root} disp.screen_output_mode=EDID init=${init} loglevel=${loglevel} partitions=${partitions} initcall_debug=0 
+load_config=fatload mmc ${mmcdev}:${mmcpart} 0x43000000 ${scriptfile}
+boot_linux=fatload mmc ${mmcdev}:${mmcpart} ${loadaddr} ${uimage}; bootm ${loadaddr}
+boot_normal=run load_config; run boot_linux
+bootcmd=run setargs boot_normal

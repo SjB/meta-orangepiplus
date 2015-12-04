@@ -48,6 +48,8 @@ FATPAYLOAD ?= ""
 
 #IMAGEDATESTAMP = "${@time.strftime('%Y.%m.%d',time.gmtime())}"
 
+UBOOT_ENV_BINARY ?= "${UBOOT_ENV}.${UBOOT_ENV_SUFFIX}"
+
 IMAGE_CMD_allwinner-sdcard = "create_image_allwinner_sdcard"
 
 create_image_allwinner_sdcard() {
@@ -73,6 +75,7 @@ create_image_allwinner_sdcard() {
 	# parted -s ${SDIMG} unit KiB mkpart primary 1 ${IMAGE_ROOTFS_ALIGNMENT}
 	# Create boot partition and mark it as bootable
 	parted -s ${SDIMG} unit KiB mkpart primary fat32 ${IMAGE_ROOTFS_ALIGNMENT} $(expr ${BOOT_SPACE_ALIGNED} \+ ${IMAGE_ROOTFS_ALIGNMENT})
+	parted -s ${SDIMG} unit KiB set 1 boot on
 	# Create rootfs partition to the end of disk
 	parted -s ${SDIMG} -- unit KiB mkpart primary ext2 $(expr ${BOOT_SPACE_ALIGNED} \+ ${IMAGE_ROOTFS_ALIGNMENT}) -1s
 	parted ${SDIMG} print
@@ -84,15 +87,24 @@ create_image_allwinner_sdcard() {
 
 	echo "Create vfat image with boot files"
 	# Create a vfat image with boot files
-	BOOT_BLOCKS=$(LC_ALL=C parted -s ${SDIMG} unit b print | awk '/ 2 / { print substr($4, 1, length($4 -1)) / 512 /2 }')
+	BOOT_BLOCKS=$(LC_ALL=C parted -s ${SDIMG} unit b print | awk '/ boot/ { print substr($4, 1, length($4 -1)) / 512 /2 }')
 	echo "Boot blocks: $BOOT_BLOCKS"
+	echo "Creating partition"
 	rm -f ${WORKDIR}/boot.img
-	mkfs.vfat -n "${BOOTDD_VOLUME_ID}" -S 512 -C ${WORKDIR}/boot.img $BOOT_BLOCKS
-#	mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/bcm2835-bootfiles/* ::/
+	mkfs.vfat -n "${BOOTDD_VOLUME_ID}" -S 512 -C ${WORKDIR}/boot.img $BOOT_BLOCKS 
+	echo "Installing boot files"
+	mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/bootfiles/* ::/
 	case "${KERNEL_IMAGETYPE}" in
 	"uImage")
-		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/u-boot.${UBOOT_SUFFIX} ::${SDIMG_KERNELIMAGE}
+		echo "Installing boot0"
 		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/boot0.${BOOT0_SUFFIX} ::boot0.${BOOT0_SUFFIX}
+		echo "Installing u-boot"
+		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/u-boot.${UBOOT_SUFFIX} ::${SDIMG_KERNELIMAGE}
+		if [ "x${UBOOT_ENV}" != "x" ]; then
+			echo "Installing ${UBOOT_ENV_BINARY}"
+			mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${UBOOT_ENV_BINARY} ::${UBOOT_ENV_BINARY}
+		fi
+		echo installing uImage
 		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}${KERNEL_INITRAMFS}-${MACHINE}.bin ::uImage
 		;;
 	*)

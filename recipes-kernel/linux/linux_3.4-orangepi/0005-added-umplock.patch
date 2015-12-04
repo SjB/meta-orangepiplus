@@ -1,0 +1,36 @@
+diff --git a/linux-3.4/modules/mali/Makefile b/linux-3.4/modules/mali/Makefile
+index 9a95f10..cb444fc 100755
+--- a/linux-3.4/modules/mali/Makefile
++++ b/linux-3.4/modules/mali/Makefile
+@@ -5,6 +5,7 @@ include $(O)/.config
+ MALI_DRV_ROOT=DX910-SW-99002-r4p0-00rel0_modify/driver/src/devicedrv/mali
+ MALI_UMP_ROOT=DX910-SW-99002-r4p0-00rel0_modify/driver/src/devicedrv/ump
+ MALI_EGL_ROOT=DX910-SW-99002-r4p0-00rel0_modify/driver/src/egl/x11/drm_module/mali_drm
++MALI_UMPLOCK_ROOT=DX910-SW-99002-r4p0-00rel0_modify/driver/src/devicedrv/umplock
+ 
+ ifeq ($(LICHEE_PLATFORM),linux)
+ UMP_ENABLE=1
+@@ -17,6 +18,7 @@ install: build
+ 	cp $(MALI_EGL_ROOT)/mali_drm.ko $(LICHEE_MOD_DIR)/kernel/drivers/gpu/mali
+ 	if [ $(UMP_ENABLE) -eq 1 ]; then \
+ 		cp $(MALI_UMP_ROOT)/ump.ko $(LICHEE_MOD_DIR)/kernel/drivers/gpu/ump; \
++		cp $(MALI_UMPLOCK_ROOT)/umplock.ko $(LICHEE_MOD_DIR)/kernel/drivers/gpu/ump; \
+ 	fi
+ 
+ build:
+@@ -25,6 +27,7 @@ build:
+ 	@echo UMP_ENABLE: $(UMP_ENABLE)
+ 	if [ $(UMP_ENABLE) -eq 1 ]; then \
+ 		$(MAKE) -j16 -C $(MALI_UMP_ROOT) CONFIG=ca8-virtex820-m400-1 BUILD=release KDIR=${LICHEE_KDIR}; \
++		$(MAKE) -j16 -C $(MALI_UMPLOCK_ROOT) CONFIG=ca8-virtex820-m400-1 BUILD=release KDIR=${LICHEE_KDIR}; \
+ 	fi
+ 	$(MAKE) -j16 -C $(MALI_DRV_ROOT) USING_MMU=1 USING_UMP=$(UMP_ENABLE) USING_PMM=1 BUILD=release \
+ 		KDIR=${LICHEE_KDIR}
+@@ -33,6 +36,7 @@ build:
+ clean:
+ 	if [ $(UMP_ENABLE) -eq 1 ]; then \
+ 		$(MAKE) -C $(MALI_UMP_ROOT) CONFIG=ca8-virtex820-m400-1 BUILD=release KDIR=${LICHEE_KDIR} clean; \
++		$(MAKE) -C $(MALI_UMPLOCK_ROOT) CONFIG=ca8-virtex820-m400-1 BUILD=release KDIR=${LICHEE_KDIR} clean; \
+ 	fi
+ 	$(MAKE) -C $(MALI_DRV_ROOT) USING_MMU=1 USING_UMP=$(UMP_ENABLE) USING_PMM=1 BUILD=release \
+ 		KDIR=${LICHEE_KDIR} clean

@@ -1,0 +1,34 @@
+diff --git a/linux-3.4/modules/mali/DX910-SW-99002-r4p0-00rel0_modify/driver/src/devicedrv/mali/Makefile b/linux-3.4/modules/mali/DX910-SW-99002-r4p0-00rel0_modify/driver/src/devicedrv/mali/Makefile
+index c1b0091..6d880f3 100644
+--- a/linux-3.4/modules/mali/DX910-SW-99002-r4p0-00rel0_modify/driver/src/devicedrv/mali/Makefile
++++ b/linux-3.4/modules/mali/DX910-SW-99002-r4p0-00rel0_modify/driver/src/devicedrv/mali/Makefile
+@@ -79,7 +79,7 @@ endif
+ # Define host system directory
+ KDIR-$(shell uname -m):=/lib/modules/$(shell uname -r)/build
+ 
+-include $(KDIR)/.config
++include $(O)/.config
+ 
+ ifeq ($(ARCH), arm)
+ # when compiling for ARM we're cross compiling
+diff --git a/linux-3.4/modules/mali/DX910-SW-99002-r4p0-00rel0_modify/driver/src/devicedrv/ump/Makefile b/linux-3.4/modules/mali/DX910-SW-99002-r4p0-00rel0_modify/driver/src/devicedrv/ump/Makefile
+index e2aa8e5..5c3c8c4 100644
+--- a/linux-3.4/modules/mali/DX910-SW-99002-r4p0-00rel0_modify/driver/src/devicedrv/ump/Makefile
++++ b/linux-3.4/modules/mali/DX910-SW-99002-r4p0-00rel0_modify/driver/src/devicedrv/ump/Makefile
+@@ -64,4 +64,3 @@ kernelrelease:
+ 
+ clean:
+ 	$(MAKE) -C $(KDIR) M=$(CURDIR) clean
+-	$(MAKE) -C $(KDIR) M=$(CURDIR)/../mali clean
+diff --git a/linux-3.4/modules/mali/Makefile b/linux-3.4/modules/mali/Makefile
+index 2d0b1e9..9a95f10 100755
+--- a/linux-3.4/modules/mali/Makefile
++++ b/linux-3.4/modules/mali/Makefile
+@@ -1,6 +1,6 @@
+ PWD=$(shell pwd)
+ 
+-include ../../.config
++include $(O)/.config
+ 
+ MALI_DRV_ROOT=DX910-SW-99002-r4p0-00rel0_modify/driver/src/devicedrv/mali
+ MALI_UMP_ROOT=DX910-SW-99002-r4p0-00rel0_modify/driver/src/devicedrv/ump

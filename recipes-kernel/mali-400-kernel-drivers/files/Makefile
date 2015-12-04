@@ -13,28 +13,28 @@ clean: $(MALI_CLEAN_TARGETS)
 modules_install: $(MALI_INSTALL_TARGETS)
 
 mali: ump
-	$(MAKE) -C $(SRC-mali) KDIR=$(KERNEL_SRC) CONFIG=$(MALI_CONFIG) TARGET_PLATFORM=$(MALI_PLATFORM) 
+	$(MAKE) -C $(SRC-mali) KDIR=$(KERNEL_SRC) CONFIG=$(MALI_CONFIG) TARGET_PLATFORM=$(MALI_PLATFORM) SVN_REV=0
 
 ump:
-	$(MAKE) -C $(SRC-ump) KDIR=$(KERNEL_SRC) CONFIG=$(UMP_CONFIG)
+	$(MAKE) -C $(SRC-ump) KDIR=$(KERNEL_SRC) CONFIG=$(UMP_CONFIG) SVN_REV=0
 
 drm: mali
-	$(MAKE) -C $(SRC-drm) KDIR=$(KERNEL_SRC) CONFIG=$(UMP_CONFIG)
+	$(MAKE) -C $(SRC-drm) KDIR=$(KERNEL_SRC) CONFIG=$(UMP_CONFIG) SVN_REV=0
 
 mali_install: mali
-	$(MAKE) -C $(KERNEL_SRC) M=$(SRC-mali) modules_install
+	$(MAKE) -C $(KERNEL_SRC) M=$(SRC-mali) SVN_REV=0 modules_install
 
 ump_install: ump
-	$(MAKE) -C $(KERNEL_SRC) M=$(SRC-ump) modules_install
+	$(MAKE) -C $(KERNEL_SRC) M=$(SRC-ump) SVN_REV=0 modules_install
 
 drm_install: drm
-	$(MAKE) -C $(KERNEL_SRC) M=$(SRC-drm) modules_install
+	$(MAKE) -C $(KERNEL_SRC) M=$(SRC-drm) SVN_REV=0 modules_install
 
 mali_clean:
-	$(MAKE) -C $(SRC-mali) KDIR=$(KERNEL_SRC) CONFIG=$(MALI_CONFIG) TARGET_PLATFORM=$(MALI_PLATFORM) clean
+	$(MAKE) -C $(SRC-mali) KDIR=$(KERNEL_SRC) CONFIG=$(MALI_CONFIG) TARGET_PLATFORM=$(MALI_PLATFORM) SVN_REV=0 clean
 
 ump_clean:
-	$(MAKE) -C $(SRC-ump) KDIR=$(KERNEL_SRC) CONFIG=$(UMP_CONFIG) clean
+	$(MAKE) -C $(SRC-ump) KDIR=$(KERNEL_SRC) CONFIG=$(UMP_CONFIG) SVN_REV=0 clean
 
 drm_clean:
-	$(MAKE) -C $(SRC-drm) KDIR=$(KERNEL_SRC) CONFIG=$(UMP_CONFIG) clean
+	$(MAKE) -C $(SRC-drm) KDIR=$(KERNEL_SRC) CONFIG=$(UMP_CONFIG) SVN_REV=0 clean

@@ -19,6 +19,7 @@ SRC_URI = "file://${MACHINE}.fex;subdir=work \
 S = "${WORKDIR}/work"
 
 do_fetch[dirs] += "${S}"
+do_fetch[depends] = "pack-tools-native:do_populate_sysroot"
 
 do_compile() {
 	# Copy system config 

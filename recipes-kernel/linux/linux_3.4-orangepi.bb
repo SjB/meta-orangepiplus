@@ -49,6 +49,8 @@ SRC_URI = "git://github.com/loboris/OrangePI-Kernel.git;protocol=https;name=mach
 SRC_URI += "file://0001-fix-makefiles.patch \
 	file://0002-remote-build-dir.patch \
 	file://0003-include-build-config.patch \
+	file://0004-check-disp-version.patch \
+	file://0005-added-umplock.patch \
 	file://defconfig"
 
 # Override SRCREV to point to a different commit in a bbappend file to
@@ -275,6 +277,8 @@ do_compile_kernelmodules() {
 	export O=${STAGING_KERNEL_BUILDDIR}
 	
 	cd modules/mali
+	#oe_runmake ${PARALLEL_MAKE} ARCH=${ARCH} CROSS_COMPILE=arm-linux-gnueabi- ${KERNEL_EXTRA_ARGS} MALI_DRV_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/devicedrv/mali MALI_UMP_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/devicedrv/ump MALI_EGL_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/egl/x11/drm_module/mali_drm clean
+	#oe_runmake ${PARALLEL_MAKE} ARCH=${ARCH} CROSS_COMPILE=arm-linux-gnueabi- ${KERNEL_EXTRA_ARGS} MALI_DRV_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/devicedrv/mali MALI_UMP_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/devicedrv/ump MALI_EGL_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/egl/x11/drm_module/mali_drm build
 	oe_runmake ${PARALLEL_MAKE} ARCH=${ARCH} CROSS_COMPILE=arm-linux-gnueabi- ${KERNEL_EXTRA_ARGS} clean
 	oe_runmake ${PARALLEL_MAKE} ARCH=${ARCH} CROSS_COMPILE=arm-linux-gnueabi- ${KERNEL_EXTRA_ARGS} build
 }
