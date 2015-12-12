@@ -256,31 +256,31 @@ do_compile_kernelmodules() {
 	
 	#compiling mali
 	
-	cd ${STAGING_KERNEL_DIR}
-	export PATH="${S}/brandy/gcc-linaro/bin":"$PATH"
-	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS MACHINE CROSS_COMPILE
+#	cd ${STAGING_KERNEL_DIR}
+#	export PATH="${S}/brandy/gcc-linaro/bin":"$PATH"
+#	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS MACHINE CROSS_COMPILE
 
-	bbnote Building mali modules
+#	bbnote Building mali modules
 
-	export LICHEE_PLATFORM=linux
-	export KERNEL_VERSION=`make ARCH=arm CROSS_COMPILE=${cross_comp}- -s kernelversion -C ./`
+#	export LICHEE_PLATFORM=linux
+#	export KERNEL_VERSION=`make ARCH=arm CROSS_COMPILE=${cross_comp}- -s kernelversion -C ./`
 
-	LICHEE_KDIR=${STAGING_KERNEL_BUILDDIR}
-	KDIR=${STAGING_KERNEL_BUILDDIR}
-	export LICHEE_MOD_DIR=${D}/lib/modules/${KERNEL_VERSION}
-	mkdir -p $LICHEE_MOD_DIR/kernel/drivers/gpu/mali
-	mkdir -p $LICHEE_MOD_DIR/kernel/drivers/gpu/ump
+#	LICHEE_KDIR=${STAGING_KERNEL_BUILDDIR}
+#	KDIR=${STAGING_KERNEL_BUILDDIR}
+#	export LICHEE_MOD_DIR=${D}/lib/modules/${KERNEL_VERSION}
+#	mkdir -p $LICHEE_MOD_DIR/kernel/drivers/gpu/mali
+#	mkdir -p $LICHEE_MOD_DIR/kernel/drivers/gpu/ump
 
-	export LICHEE_KDIR
-	export MOD_DIR=${D}/lib/modules/${KERNEL_VERSION}
-	export KDIR
-	export O=${STAGING_KERNEL_BUILDDIR}
-	
-	cd modules/mali
-	#oe_runmake ${PARALLEL_MAKE} ARCH=${ARCH} CROSS_COMPILE=arm-linux-gnueabi- ${KERNEL_EXTRA_ARGS} MALI_DRV_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/devicedrv/mali MALI_UMP_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/devicedrv/ump MALI_EGL_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/egl/x11/drm_module/mali_drm clean
-	#oe_runmake ${PARALLEL_MAKE} ARCH=${ARCH} CROSS_COMPILE=arm-linux-gnueabi- ${KERNEL_EXTRA_ARGS} MALI_DRV_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/devicedrv/mali MALI_UMP_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/devicedrv/ump MALI_EGL_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/egl/x11/drm_module/mali_drm build
-	oe_runmake ${PARALLEL_MAKE} ARCH=${ARCH} CROSS_COMPILE=arm-linux-gnueabi- ${KERNEL_EXTRA_ARGS} clean
-	oe_runmake ${PARALLEL_MAKE} ARCH=${ARCH} CROSS_COMPILE=arm-linux-gnueabi- ${KERNEL_EXTRA_ARGS} build
+#	export LICHEE_KDIR
+#	export MOD_DIR=${D}/lib/modules/${KERNEL_VERSION}
+#	export KDIR
+#	export O=${STAGING_KERNEL_BUILDDIR}
+#	
+#	cd modules/mali
+#	#oe_runmake ${PARALLEL_MAKE} ARCH=${ARCH} CROSS_COMPILE=arm-linux-gnueabi- ${KERNEL_EXTRA_ARGS} MALI_DRV_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/devicedrv/mali MALI_UMP_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/devicedrv/ump MALI_EGL_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/egl/x11/drm_module/mali_drm clean
+#	#oe_runmake ${PARALLEL_MAKE} ARCH=${ARCH} CROSS_COMPILE=arm-linux-gnueabi- ${KERNEL_EXTRA_ARGS} MALI_DRV_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/devicedrv/mali MALI_UMP_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/devicedrv/ump MALI_EGL_ROOT=DX910-SW-99002-r3p2-01rel2/driver/src/egl/x11/drm_module/mali_drm build
+#	oe_runmake ${PARALLEL_MAKE} ARCH=${ARCH} CROSS_COMPILE=arm-linux-gnueabi- ${KERNEL_EXTRA_ARGS} clean
+#	oe_runmake ${PARALLEL_MAKE} ARCH=${ARCH} CROSS_COMPILE=arm-linux-gnueabi- ${KERNEL_EXTRA_ARGS} build
 }
 
 addtask compile_kernelmodules after do_compile before do_install
@@ -317,29 +317,29 @@ do_install() {
 	install -d ${D}${sysconfdir}/modprobe.d
 
 	# install mali
-	cd ${STAGING_KERNEL_DIR}
-	export PATH="${S}/brandy/gcc-linaro/bin":"$PATH"
-	
-	bbnote Installing mali modules
+#	cd ${STAGING_KERNEL_DIR}
+#	export PATH="${S}/brandy/gcc-linaro/bin":"$PATH"
+#	
+#	bbnote Installing mali modules
 
-	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS MACHINE CROSS_COMPILE
+#	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS MACHINE CROSS_COMPILE
 
-	export LICHEE_PLATFORM=linux
-	export KERNEL_VERSION=`make ARCH=arm CROSS_COMPILE=${cross_comp}- -s kernelversion -C ./`
+#	export LICHEE_PLATFORM=linux
+#	export KERNEL_VERSION=`make ARCH=arm CROSS_COMPILE=${cross_comp}- -s kernelversion -C ./`
 
-	LICHEE_KDIR=${STAGING_KERNEL_BUILDDIR}
-	KDIR=${STAGING_KERNEL_BUILDDIR}
-	export LICHEE_MOD_DIR=${D}/lib/modules/${KERNEL_VERSION}
-	mkdir -p $LICHEE_MOD_DIR/kernel/drivers/gpu/mali
-	mkdir -p $LICHEE_MOD_DIR/kernel/drivers/gpu/ump
+#	LICHEE_KDIR=${STAGING_KERNEL_BUILDDIR}
+#	KDIR=${STAGING_KERNEL_BUILDDIR}
+#	export LICHEE_MOD_DIR=${D}/lib/modules/${KERNEL_VERSION}
+#	mkdir -p $LICHEE_MOD_DIR/kernel/drivers/gpu/mali
+#	mkdir -p $LICHEE_MOD_DIR/kernel/drivers/gpu/ump
 
-	export LICHEE_KDIR
-	export MOD_DIR=${D}/lib/modules/${KERNEL_VERSION}
-	export KDIR
-	export O=${STAGING_KERNEL_BUILDDIR}
-	
-	cd modules/mali
-	oe_runmake ARCH=${ARCH} CROSS_COMPILE=arm-linux-gnueabi- ${KERNEL_EXTRA_ARGS} install
+#	export LICHEE_KDIR
+#	export MOD_DIR=${D}/lib/modules/${KERNEL_VERSION}
+#	export KDIR
+#	export O=${STAGING_KERNEL_BUILDDIR}
+#	
+#	cd modules/mali
+#	oe_runmake ARCH=${ARCH} CROSS_COMPILE=arm-linux-gnueabi- ${KERNEL_EXTRA_ARGS} install
 }
 
 do_bundle_initramfs () {

@@ -1,0 +1,91 @@
+diff --git a/driver/src/devicedrv/mali/linux/mali_osk_low_level_mem.c b/driver/src/devicedrv/mali/linux/mali_osk_low_level_mem.c
+index 02558a0..853f3f9 100644
+--- a/driver/src/devicedrv/mali/linux/mali_osk_low_level_mem.c
++++ b/driver/src/devicedrv/mali/linux/mali_osk_low_level_mem.c
+@@ -101,42 +101,27 @@ static struct vm_operations_struct mali_kernel_vm_ops =
+ #endif
+ };
+ 
+-#if LINUX_VERSION_CODE < KERNEL_VERSION(3,0,0)
+-	#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,35)
+-static int mali_mem_shrink(int nr_to_scan, gfp_t gfp_mask)
+-	#else
+-static int mali_mem_shrink(struct shrinker *shrinker, int nr_to_scan, gfp_t gfp_mask)
+-	#endif
+-#else
+-static int mali_mem_shrink(struct shrinker *shrinker, struct shrink_control *sc)
+-#endif
++static unsigned long mali_mem_count_objects(struct shrinker *shrinker,
++				       struct shrink_control *sc)
+ {
+-	unsigned long flags;
+-	AllocationList *item;
+-#if LINUX_VERSION_CODE < KERNEL_VERSION(3,0,0)
+-	int nr = nr_to_scan;
+-#else
+-	int nr = sc->nr_to_scan;
+-#endif
+-
+-	if (0 == nr)
+-	{
+-		return pre_allocated_memory_size_current / PAGE_SIZE;
+-	}
+-
+-	if (0 == pre_allocated_memory_size_current)
+-	{
+-		/* No pages availble */
+-		return 0;
+-	}
++	return pre_allocated_memory_size_current / PAGE_SIZE;
++}
+ 
+-	if (0 == spin_trylock_irqsave(&allocation_list_spinlock, flags))
++static unsigned long mali_mem_scan_objects(struct shrinker *shrinker,
++				      struct shrink_control *sc)
++{
++	int nr = sc->nr_to_scan;
++	AllocationList *item;
++	unsigned long flags = 0;
++	int freed = 0;
++	
++	if (! spin_trylock_irqsave(&allocation_list_spinlock, flags))
+ 	{
+ 		/* Not able to lock. */
+-		return -1;
++		return SHRINK_STOP;
+ 	}
+ 
+-	while (pre_allocated_memory && nr > 0)
++	while (pre_allocated_memory && nr > freed)
+ 	{
+ 		item = pre_allocated_memory;
+ 		pre_allocated_memory = item->next;
+@@ -145,15 +130,16 @@ static int mali_mem_shrink(struct shrinker *shrinker, struct shrink_control *sc)
+ 		_mali_osk_free(item);
+ 
+ 		pre_allocated_memory_size_current -= PAGE_SIZE;
+-		--nr;
++		freed++;
+ 	}
+ 	spin_unlock_irqrestore(&allocation_list_spinlock,flags);
+ 
+-	return pre_allocated_memory_size_current / PAGE_SIZE;
++	return freed;
+ }
+ 
+ struct shrinker mali_mem_shrinker = {
+-	.shrink = mali_mem_shrink,
++	.count_objects = mali_mem_count_objects,
++	.scan_objects = mali_mem_scan_objects,
+ 	.seeks = DEFAULT_SEEKS,
+ };
+ 
+@@ -464,7 +450,7 @@ _mali_osk_errcode_t _mali_osk_mem_mapregion_init( mali_memory_allocation * descr
+ 	  The memory is reserved, meaning that it's present and can never be paged out (see also previous entry)
+ 	*/
+ 	vma->vm_flags |= VM_IO;
+-	vma->vm_flags |= VM_RESERVED;
++	vma->vm_flags |= (VM_DONTEXPAND | VM_DONTDUMP);
+ 	vma->vm_flags |= VM_DONTCOPY;
+ 
+ 	vma->vm_page_prot = pgprot_writecombine(vma->vm_page_prot);

@@ -1,0 +1,39 @@
+diff --git a/driver/src/egl/x11/drm_module/mali_drm/mali/mali_drv.c b/driver/src/egl/x11/drm_module/mali_drm/mali/mali_drv.c
+index f2cd38e..f608d43 100644
+--- a/driver/src/egl/x11/drm_module/mali_drm/mali/mali_drv.c
++++ b/driver/src/egl/x11/drm_module/mali_drm/mali/mali_drv.c
+@@ -9,6 +9,7 @@
+  */
+ 
+ #include <drm/drmP.h>
++#include <drm/drm_legacy.h>
+ #include <linux/vermagic.h>
+ #include "mali_drm.h"
+ #include "mali_drv.h"
+@@ -62,7 +63,7 @@ static int mali_driver_load(struct drm_device *dev, unsigned long chipset)
+ 	drm_mali_private_t *dev_priv;
+ 	printk(KERN_ERR "DRM: mali_driver_load start\n");
+ 
+-	dev_priv = drm_calloc(1, sizeof(drm_mali_private_t), DRM_MEM_DRIVER);
++	dev_priv = kcalloc(1, sizeof(drm_mali_private_t), GFP_KERNEL);
+ 	if ( dev_priv == NULL ) return -ENOMEM;
+ 
+ 	dev->dev_private = (void *)dev_priv;
+@@ -78,7 +79,7 @@ static int mali_driver_load(struct drm_device *dev, unsigned long chipset)
+ 	size = drm_get_resource_len(dev, 1 );
+ 	#endif
+ 	ret = drm_sman_init(&dev_priv->sman, 2, 12, 8);
+-	if ( ret ) drm_free(dev_priv, sizeof(dev_priv), DRM_MEM_DRIVER);
++	if ( ret ) kfree(dev_priv);
+ 	//if ( ret ) kfree( dev_priv );
+ 
+ 	printk(KERN_ERR "DRM: mali_driver_load done\n");
+@@ -92,7 +93,7 @@ static int mali_driver_unload( struct drm_device *dev )
+ 	printk(KERN_ERR "DRM: mali_driver_unload start\n");
+ 
+ 	drm_sman_takedown(&dev_priv->sman);
+-	drm_free(dev_priv, sizeof(*dev_priv), DRM_MEM_DRIVER);
++	kfree(dev_priv);
+ 	//kfree( dev_priv );
+ 	printk(KERN_ERR "DRM: mali_driver_unload done\n");
+ 

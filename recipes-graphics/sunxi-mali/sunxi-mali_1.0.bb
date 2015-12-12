@@ -7,6 +7,7 @@ DESCRIPTION = "Sunxi Mali-400 support libraries."
 SECTION = "graphics"
 DEPENDS = "libump \
 	${@base_contains('DISTRO_FEATURES', 'x11', 'libxdmcp libx11 libdrm libxcb libxext libxau libxfixes', '', d)}"
+PROVIDES = "libmali"
 LICENSE = "MIT&Proprietary"
 LIC_FILES_CHKSUM = "file://version/version.c;beginline=1;endline=22;md5=3331d9ebf9926606b171dc3e7811dbec"
 
