@@ -3,6 +3,7 @@ require xorg-driver-video.inc
 SUMMARY = "X.Org X server -- fbturbo display driver"
 
 DEPENDS += "libump virtual/kernel"
+RDEPENDS_${PN} += "libUMP.so"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://README.txt;beginline=1;endline=21;md5=774fedaa798d52305e159f9a437515cc"
 
