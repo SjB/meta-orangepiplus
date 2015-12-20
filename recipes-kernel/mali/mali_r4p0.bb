@@ -5,8 +5,8 @@
 
 DESCRIPTION = "Mali-400 kernel drivers for external compilation for use with linux-sunxi kernel. "
 SECTION = "drivers"
-DEPENDS = "virtual/kernel mesa"
-PROVIDES = "virtual/mali libump libmali"
+DEPENDS = "virtual/kernel mesa-gl"
+PROVIDES = "virtual/mali libump libmali virtual/libgles1 virtual/libgles2 virtual/egl"
 RPROVIDES_libmali = "libEGL.so libGLESv2.so libGLESv1_CM.so libMali.so"
 RPROVIDES_libump = "libUMP.so"
 LICENSE = "GPLv2&Apache-2.0"

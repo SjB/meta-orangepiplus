@@ -1,5 +1,0 @@
-kconf hardware orangepiplus.cfg
-include features/usb-net/usb-net.scc
-
-kconf hardware orangepiplus-user-config.cfg
-include orangepiplus-user-patches.scc

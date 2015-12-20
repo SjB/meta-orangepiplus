@@ -51,6 +51,7 @@ SRC_URI += "file://0001-fix-makefiles.patch \
 	file://0003-include-build-config.patch \
 	file://0004-check-disp-version.patch \
 	file://0005-added-umplock.patch \
+	file://0006-gcc5-support.patch \
 	file://defconfig"
 
 # Override SRCREV to point to a different commit in a bbappend file to

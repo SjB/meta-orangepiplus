@@ -2,14 +2,14 @@ diff --git a/misc/terminfo.src b/misc/terminfo.src
 index 4a01b96..5ae0e98 100644
 --- a/misc/terminfo.src
 +++ b/misc/terminfo.src
-@@ -937,8 +937,8 @@ linux-c|linux console 1.3.6+ for older ncurses,
+@@ -1623,8 +1623,8 @@ linux-c|linux console 1.3.6+ for older ncurses,
  # get a block cursor for cvvis.
  # reported by Frank Heckenbach <frank@g-n-u.de>.
- linux|linux console,
+ linux2.2|linux 2.2.x console,
 -	civis=\E[?25l\E[?1c, cnorm=\E[?25h\E[?0c,
 -	cvvis=\E[?25h\E[?8c, use=linux-c-nc,
 +	civis=\E[?25l\E[?16;15;127c, cnorm=\E[?25h\E[?16;15;127c,
 +	cvvis=\E[?25h\E[?16;15;127c, use=linux-c-nc,
  
- # Subject: linux 2.6.26 vt back_color_erase
- # Changes to the Linux console driver broke bce model as reported in
+ # Linux 2.6.x has a fix for SI/SO to work with UTF-8 encoding added here:
+ #	http://lkml.indiana.edu/hypermail/linux/kernel/0602.2/0868.html
